@@ -1,0 +1,629 @@
+
+--- Module:   ..\..\qep\source\qep.cpp (C++)
+                             _
+    { (QSignal)QEP_EMPTY_SIG_, (uint8_t)0 },
+..\..\qep\source\qep.cpp  36  Note 930: cast from enum to unsigned char
+                          _
+    { (QSignal)Q_ENTRY_SIG,    (uint8_t)0 },
+..\..\qep\source\qep.cpp  37  Note 930: cast from enum to unsigned char
+                         _
+    { (QSignal)Q_EXIT_SIG,     (uint8_t)0 },
+..\..\qep\source\qep.cpp  38  Note 930: cast from enum to unsigned char
+                         _
+    { (QSignal)Q_INIT_SIG,     (uint8_t)0 }
+..\..\qep\source\qep.cpp  39  Note 930: cast from enum to unsigned char
+ _
+};
+..\..\qep\source\qep.cpp  40  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                                   _
+char const Q_ROM * Q_ROM_VAR QEP::getVersion(void) {
+..\..\qep\source\qep.cpp  43  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                          _
+        ((QP_VERSION >> 12) & 0xF) + '0',
+..\..\qep\source\qep.cpp  45  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qep\source\qep.cpp  45  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qep\source\qep.cpp  45  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qep\source\qep.cpp  45  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qep\source\qep.cpp  45  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                          _
+        ((QP_VERSION >>  8) & 0xF) + '0',
+..\..\qep\source\qep.cpp  47  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qep\source\qep.cpp  47  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qep\source\qep.cpp  47  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qep\source\qep.cpp  47  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qep\source\qep.cpp  47  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                          _
+        ((QP_VERSION >>  4) & 0xF) + '0',
+..\..\qep\source\qep.cpp  49  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qep\source\qep.cpp  49  Info 778: Constant expression evaluates to 0 in
+    operation '&'
+..\..\qep\source\qep.cpp  49  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qep\source\qep.cpp  49  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qep\source\qep.cpp  49  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qep\source\qep.cpp  49  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                                 _
+        (QP_VERSION         & 0xF) + '0',
+..\..\qep\source\qep.cpp  50  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qep\source\qep.cpp  50  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qep\source\qep.cpp  50  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qep\source\qep.cpp  50  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+
+--- Module:   ..\..\qep\source\qfsm_dis.cpp (C++)
+                                     _
+void QFsm::dispatch(QEvent const *e) {
+..\..\qep\source\qfsm_dis.cpp  35  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                               _
+#... ave  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+        QS_BEGIN_(QS_QEP_TRAN, QS::smObj_, this)
+..\..\qep\source\qfsm_dis.cpp  42  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                     _
+            QS_TIME_();                                          // time stamp
+..\..\qep\source\qfsm_dis.cpp  43  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+            QS_SIG_(e->sig);                        // the signal of the event
+..\..\qep\source\qfsm_dis.cpp  44  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                        _
+#... e  -e923 */((void)0) /*lint -restore */
+            QS_OBJ_(this);                        // this state machine object
+..\..\qep\source\qfsm_dis.cpp  45  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                     _
+#... -e923 */((void)0) /*lint -restore */
+            QS_FUN_(s);                        // the source of the transition
+..\..\qep\source\qfsm_dis.cpp  46  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                           _
+#... save  -e923 */((void)0) /*lint -restore */
+            QS_FUN_(m_state);                          // the new active state
+..\..\qep\source\qfsm_dis.cpp  47  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                     _
+        (void)QEP_TRIG_(s, Q_EXIT_SIG);                     // exit the source
+..\..\qep\source\qfsm_dis.cpp  50  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+                                            _
+        (void)QEP_TRIG_(m_state, Q_ENTRY_SIG);             // enter the target
+..\..\qep\source\qfsm_dis.cpp  51  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+_
+}
+..\..\qep\source\qfsm_dis.cpp  77  Note 952: Parameter 'e' (line 35) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qep\source\qfsm_dis.cpp  35  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qep\source\qfsm_ini.cpp (C++)
+                             _
+#... this_file[] = "qfsm_ini"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qfsm_ini)
+..\..\qep\source\qfsm_ini.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+              _
+QFsm::~QFsm() {
+..\..\qep\source\qfsm_ini.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                 _
+void QFsm::init(QEvent const *e) {
+..\..\qep\source\qfsm_ini.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                 _
+#... -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_(QS_QEP_STATE_INIT, QS::smObj_, this)
+..\..\qep\source\qfsm_ini.cpp  44  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                            // this state machine object
+..\..\qep\source\qfsm_ini.cpp  45  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                _
+#... nt  -save  -e923 */((void)0) /*lint -restore */
+        QS_FUN_((QStateHandler)0);       // the source (not defined for a FSM)
+..\..\qep\source\qfsm_ini.cpp  46  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+#...   -e923 */((void)0) /*lint -restore */
+        QS_FUN_(m_state);                      // the target of the transition
+..\..\qep\source\qfsm_ini.cpp  47  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                              _
+#... state)(this, e) == ((QState)2)) { } else (Q_onAssert(l_this_file, __LINE__
+#... ASSERT((*m_state)(this, e) == ((QState)2))
+    Q_ALLEGE((*m_state)(this, e) == Q_RET_TRAN);   // transition must be taken
+..\..\qep\source\qfsm_ini.cpp  51  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                              _
+#...  } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... ASSERT((*m_state)(this, e) == ((QState)2))
+    Q_ALLEGE((*m_state)(this, e) == Q_RET_TRAN);   // transition must be taken
+..\..\qep\source\qfsm_ini.cpp  51  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                        _
+    (void)QEP_TRIG_(m_state, Q_ENTRY_SIG);                 // enter the target
+..\..\qep\source\qfsm_ini.cpp  53  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+                                                _
+#... save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_(QS_QEP_INIT_TRAN, QS::smObj_, this)
+..\..\qep\source\qfsm_ini.cpp  55  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                              // time stamp
+..\..\qep\source\qfsm_ini.cpp  56  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                            // this state machine object
+..\..\qep\source\qfsm_ini.cpp  57  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+#...   -e923 */((void)0) /*lint -restore */
+        QS_FUN_(m_state);                              // the new active state
+..\..\qep\source\qfsm_ini.cpp  58  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+_
+}
+..\..\qep\source\qfsm_ini.cpp  60  Note 952: Parameter 'e' (line 41) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qep\source\qfsm_ini.cpp  41  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qep\source\qhsm_dis.cpp (C++)
+                             _
+#... this_file[] = "qhsm_dis"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qhsm_dis)
+..\..\qep\source\qhsm_dis.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                     _
+void QHsm::dispatch(QEvent const *e) {
+..\..\qep\source\qhsm_dis.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                               _
+#... ave  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_(QS_QEP_DISPATCH, QS::smObj_, this)
+..\..\qep\source\qhsm_dis.cpp  47  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                              // time stamp
+..\..\qep\source\qhsm_dis.cpp  48  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_SIG_(e->sig);                            // the signal of the event
+..\..\qep\source\qhsm_dis.cpp  49  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                            // this state machine object
+..\..\qep\source\qhsm_dis.cpp  50  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                 _
+#... 3 */((void)0) /*lint -restore */
+        QS_FUN_(t);                                       // the current state
+..\..\qep\source\qhsm_dis.cpp  51  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                             _
+#...     /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restor
+                QS_BEGIN_(QS_QEP_STATE_EXIT, QS::smObj_, this)
+..\..\qep\source\qhsm_dis.cpp  71  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                                _
+#... nt  -save  -e923 */((void)0) /*lint -restore */
+                    QS_OBJ_(this);                // this state machine object
+..\..\qep\source\qhsm_dis.cpp  72  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                             _
+#...  -save  -e923 */((void)0) /*lint -restore */
+                    QS_FUN_(t);                            // the exited state
+..\..\qep\source\qhsm_dis.cpp  73  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                 _
+                (void)QEP_TRIG_(t, QEP_EMPTY_SIG_);    // find superstate of t
+..\..\qep\source\qhsm_dis.cpp  76  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+                       _
+#... e778 -e912 */if (0) { /*lint -restore */
+#... , QS::smObj_, this) QS_OBJ_(this); QS_FUN_(s); QS_END_() } /*lint -restore
+            QEP_EXIT_(s)                                    // exit the source
+..\..\qep\source\qhsm_dis.cpp  84  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                       _
+#...   -e923 */((void)0) /*lint -restore */
+#... this) QS_OBJ_(this); QS_FUN_(s); QS_END_() } /*lint -restore */
+            QEP_EXIT_(s)                                    // exit the source
+..\..\qep\source\qhsm_dis.cpp  84  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+#...   -e923 */((void)0) /*lint -restore */
+#... _(this); QS_FUN_(s); QS_END_() } /*lint -restore */
+            QEP_EXIT_(s)                                    // exit the source
+..\..\qep\source\qhsm_dis.cpp  84  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                             _
+            (void)QEP_TRIG_(t, QEP_EMPTY_SIG_);        // superstate of target
+..\..\qep\source\qhsm_dis.cpp  88  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+                                                 _
+                (void)QEP_TRIG_(s, QEP_EMPTY_SIG_);       // superstate of src
+..\..\qep\source\qhsm_dis.cpp  94  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+                               _
+#...  -e572 -e778 -e912 */if (0) { /*lint -restore */
+#... ATE_EXIT, QS::smObj_, this) QS_OBJ_(this); QS_FUN_(s); QS_END_() } /*lint 
+                    QEP_EXIT_(s)                            // exit the source
+..\..\qep\source\qhsm_dis.cpp  97  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                               _
+#... t  -save  -e923 */((void)0) /*lint -restore */
+#... smObj_, this) QS_OBJ_(this); QS_FUN_(s); QS_END_() } /*lint -restore */
+                    QEP_EXIT_(s)                            // exit the source
+..\..\qep\source\qhsm_dis.cpp  97  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                               _
+#... t  -save  -e923 */((void)0) /*lint -restore */
+#... ) QS_OBJ_(this); QS_FUN_(s); QS_END_() } /*lint -restore */
+                    QEP_EXIT_(s)                            // exit the source
+..\..\qep\source\qhsm_dis.cpp  97  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                   _
+#... e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+#... P_STATE_EXIT, QS::smObj_, this) QS_OBJ_(this); QS_FUN_(s); QS_END_() } /*l
+                        QEP_EXIT_(s)                        // exit the source
+..\..\qep\source\qhsm_dis.cpp  103  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                                   _
+#... *lint  -save  -e923 */((void)0) /*lint -restore */
+#... QS::smObj_, this) QS_OBJ_(this); QS_FUN_(s); QS_END_() } /*lint -restore *
+                        QEP_EXIT_(s)                        // exit the source
+..\..\qep\source\qhsm_dis.cpp  103  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                   _
+#... *lint  -save  -e923 */((void)0) /*lint -restore */
+#... this) QS_OBJ_(this); QS_FUN_(s); QS_END_() } /*lint -restore */
+                        QEP_EXIT_(s)                        // exit the source
+..\..\qep\source\qhsm_dis.cpp  103  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                                         _
+#...          /*lint  -save  -e960 */if (ip < (int8_t)QEP_MAX_NEST_DEPTH_) { } 
+                                Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_dis.cpp  120  Note 930: cast from enum to signed char
+                                                                         _
+#... lint  -save  -e960 */if (ip < (int8_t)QEP_MAX_NEST_DEPTH_) { } else (Q_onA
+                                Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_dis.cpp  120  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                                                         _
+#... t8_t)QEP_MAX_NEST_DEPTH_) { } else (Q_onAssert(l_this_file, __LINE__)) /*l
+                                Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_dis.cpp  120  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                                     _
+#...      /*lint  -save  -e960 */if (ip < (int8_t)QEP_MAX_NEST_DEPTH_) { } else
+                            Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_dis.cpp  131  Note 930: cast from enum to signed char
+                                                                     _
+#...   -save  -e960 */if (ip < (int8_t)QEP_MAX_NEST_DEPTH_) { } else (Q_onAsser
+                            Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_dis.cpp  131  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                                                     _
+#... )QEP_MAX_NEST_DEPTH_) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint 
+                            Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_dis.cpp  131  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                       _
+#... 06 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+#... S_QEP_STATE_EXIT, QS::smObj_, this) QS_OBJ_(this); QS_FUN_(s); QS_END_() }
+                            QEP_EXIT_(s)                   // exit the source
+..\..\qep\source\qhsm_dis.cpp  133  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                                       _
+#...    /*lint  -save  -e923 */((void)0) /*lint -restore */
+#... IT, QS::smObj_, this) QS_OBJ_(this); QS_FUN_(s); QS_END_() } /*lint -resto
+                            QEP_EXIT_(s)                   // exit the source
+..\..\qep\source\qhsm_dis.cpp  133  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                       _
+#...    /*lint  -save  -e923 */((void)0) /*lint -restore */
+#... j_, this) QS_OBJ_(this); QS_FUN_(s); QS_END_() } /*lint -restore */
+                            QEP_EXIT_(s)                   // exit the source
+..\..\qep\source\qhsm_dis.cpp  133  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                                  _
+#...          /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -r
+                                                  QS::smObj_, this)
+..\..\qep\source\qhsm_dis.cpp  162  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                                                        _
+#...                     /*lint  -save  -e923 */((void)0) /*lint -restore */
+                                            QS_OBJ_(this);
+..\..\qep\source\qhsm_dis.cpp  163  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                     _
+#...                  /*lint  -save  -e923 */((void)0) /*lint -restore */
+                                            QS_FUN_(t);
+..\..\qep\source\qhsm_dis.cpp  164  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                                         _
+                                        (void)QEP_TRIG_(t, QEP_EMPTY_SIG_);
+..\..\qep\source\qhsm_dis.cpp  167  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+                               _
+#...  -e572 -e778 -e912 */if (0) { /*lint -restore */
+#... TE_ENTRY, QS::smObj_, this) QS_OBJ_(this); QS_FUN_(path[ip]); QS_END_() } 
+            QEP_ENTER_(path[ip])                             // enter path[ip]
+..\..\qep\source\qhsm_dis.cpp  191  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                               _
+#... t  -save  -e923 */((void)0) /*lint -restore */
+#... smObj_, this) QS_OBJ_(this); QS_FUN_(path[ip]); QS_END_() } /*lint -restor
+            QEP_ENTER_(path[ip])                             // enter path[ip]
+..\..\qep\source\qhsm_dis.cpp  191  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                               _
+#... t  -save  -e923 */((void)0) /*lint -restore */
+#... J_(this); QS_FUN_(path[ip]); QS_END_() } /*lint -restore */
+            QEP_ENTER_(path[ip])                             // enter path[ip]
+..\..\qep\source\qhsm_dis.cpp  191  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                         _
+#... /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+            QS_BEGIN_(QS_QEP_STATE_INIT, QS::smObj_, this)
+..\..\qep\source\qhsm_dis.cpp  199  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                            _
+#... -save  -e923 */((void)0) /*lint -restore */
+                QS_OBJ_(this);                    // this state machine object
+..\..\qep\source\qhsm_dis.cpp  200  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                         _
+#... ve  -e923 */((void)0) /*lint -restore */
+                QS_FUN_(t);                        // the source (pseudo)state
+..\..\qep\source\qhsm_dis.cpp  201  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                               _
+#... t  -save  -e923 */((void)0) /*lint -restore */
+                QS_FUN_(m_state);              // the target of the transition
+..\..\qep\source\qhsm_dis.cpp  202  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                   _
+            (void)QEP_TRIG_(m_state, QEP_EMPTY_SIG_);       // find superstate
+..\..\qep\source\qhsm_dis.cpp  207  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+                                                       _
+                (void)QEP_TRIG_(m_state, QEP_EMPTY_SIG_);   // find superstate
+..\..\qep\source\qhsm_dis.cpp  211  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+                                                     _
+#... ve  -e960 */if (ip < (int8_t)QEP_MAX_NEST_DEPTH_) { } else (Q_onAssert(l_t
+            Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_dis.cpp  215  Note 930: cast from enum to signed char
+                                                     _
+#... /if (ip < (int8_t)QEP_MAX_NEST_DEPTH_) { } else (Q_onAssert(l_this_file, _
+            Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_dis.cpp  215  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                                     _
+#... PTH_) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+            Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_dis.cpp  215  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                   _
+#... e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+#... _STATE_ENTRY, QS::smObj_, this) QS_OBJ_(this); QS_FUN_(path[ip]); QS_END_(
+                QEP_ENTER_(path[ip])                         // enter path[ip]
+..\..\qep\source\qhsm_dis.cpp  218  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                                   _
+#... *lint  -save  -e923 */((void)0) /*lint -restore */
+#... QS::smObj_, this) QS_OBJ_(this); QS_FUN_(path[ip]); QS_END_() } /*lint -re
+                QEP_ENTER_(path[ip])                         // enter path[ip]
+..\..\qep\source\qhsm_dis.cpp  218  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                   _
+#... *lint  -save  -e923 */((void)0) /*lint -restore */
+#... S_OBJ_(this); QS_FUN_(path[ip]); QS_END_() } /*lint -restore */
+                QEP_ENTER_(path[ip])                         // enter path[ip]
+..\..\qep\source\qhsm_dis.cpp  218  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                               _
+#... ave  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+        QS_BEGIN_(QS_QEP_TRAN, QS::smObj_, this)
+..\..\qep\source\qhsm_dis.cpp  225  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                     _
+            QS_TIME_();                                          // time stamp
+..\..\qep\source\qhsm_dis.cpp  226  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+            QS_SIG_(e->sig);                        // the signal of the event
+..\..\qep\source\qhsm_dis.cpp  227  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                        _
+#... e  -e923 */((void)0) /*lint -restore */
+            QS_OBJ_(this);                        // this state machine object
+..\..\qep\source\qhsm_dis.cpp  228  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+#...   -e923 */((void)0) /*lint -restore */
+            QS_FUN_(src);                      // the source of the transition
+..\..\qep\source\qhsm_dis.cpp  229  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                     _
+#... -e923 */((void)0) /*lint -restore */
+            QS_FUN_(t);                                // the new active state
+..\..\qep\source\qhsm_dis.cpp  230  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+_
+}
+..\..\qep\source\qhsm_dis.cpp  259  Note 952: Parameter 'e' (line 38) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qep\source\qhsm_dis.cpp  38  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qep\source\qhsm_in.cpp (C++)
+                                        _
+uint8_t QHsm::isIn(QStateHandler state) {
+..\..\qep\source\qhsm_in.cpp  35  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+_
+}
+..\..\qep\source\qhsm_in.cpp  50  Note 952: Parameter 'state' (line 35) could
+    be declared const [MISRA C++ Rule 7-1-1]
+..\..\qep\source\qhsm_in.cpp  35  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qep\source\qhsm_ini.cpp (C++)
+                             _
+#... this_file[] = "qhsm_ini"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qhsm_ini)
+..\..\qep\source\qhsm_ini.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+              _
+QHsm::~QHsm() {
+..\..\qep\source\qhsm_ini.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                 _
+void QHsm::init(QEvent const *e) {
+..\..\qep\source\qhsm_ini.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                              _
+#... state)(this, e) == ((QState)2)) { } else (Q_onAssert(l_this_file, __LINE__
+#... ASSERT((*m_state)(this, e) == ((QState)2))
+    Q_ALLEGE((*m_state)(this, e) == Q_RET_TRAN);
+..\..\qep\source\qhsm_ini.cpp  46  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                              _
+#...  } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... ASSERT((*m_state)(this, e) == ((QState)2))
+    Q_ALLEGE((*m_state)(this, e) == Q_RET_TRAN);
+..\..\qep\source\qhsm_ini.cpp  46  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                 _
+    t = (QStateHandler)&QHsm::top;              // HSM starts in the top state
+..\..\qep\source\qhsm_ini.cpp  48  Note 929: cast from pointer to pointer
+    [MISRA C++ Rule 5-2-7]
+                                                     _
+#... nt  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+        QS_BEGIN_(QS_QEP_STATE_INIT, QS::smObj_, this)
+..\..\qep\source\qhsm_ini.cpp  54  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                        _
+#... e  -e923 */((void)0) /*lint -restore */
+            QS_OBJ_(this);                        // this state machine object
+..\..\qep\source\qhsm_ini.cpp  55  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                     _
+#... -e923 */((void)0) /*lint -restore */
+            QS_FUN_(t);                                    // the source state
+..\..\qep\source\qhsm_ini.cpp  56  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                           _
+#... save  -e923 */((void)0) /*lint -restore */
+            QS_FUN_(m_state);          // the target of the initial transition
+..\..\qep\source\qhsm_ini.cpp  57  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                               _
+        (void)QEP_TRIG_(m_state, QEP_EMPTY_SIG_);
+..\..\qep\source\qhsm_ini.cpp  61  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+                                                   _
+            (void)QEP_TRIG_(m_state, QEP_EMPTY_SIG_);
+..\..\qep\source\qhsm_ini.cpp  65  Note 920: cast from unsigned char to void
+    [MISRA C++ Rule 5-2-7]
+                                                 _
+#... -e960 */if (ip < (int8_t)QEP_MAX_NEST_DEPTH_) { } else (Q_onAssert(l_this_
+        Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_ini.cpp  69  Note 930: cast from enum to signed char
+                                                 _
+#... (ip < (int8_t)QEP_MAX_NEST_DEPTH_) { } else (Q_onAssert(l_this_file, __LIN
+        Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_ini.cpp  69  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                                 _
+#... ) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+        Q_ASSERT(ip < (int8_t)QEP_MAX_NEST_DEPTH_);
+..\..\qep\source\qhsm_ini.cpp  69  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                               _
+#...  -e572 -e778 -e912 */if (0) { /*lint -restore */
+#... TE_ENTRY, QS::smObj_, this) QS_OBJ_(this); QS_FUN_(path[ip]); QS_END_() } 
+            QEP_ENTER_(path[ip]);                            // enter path[ip]
+..\..\qep\source\qhsm_ini.cpp  72  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                               _
+#... t  -save  -e923 */((void)0) /*lint -restore */
+#... smObj_, this) QS_OBJ_(this); QS_FUN_(path[ip]); QS_END_() } /*lint -restor
+            QEP_ENTER_(path[ip]);                            // enter path[ip]
+..\..\qep\source\qhsm_ini.cpp  72  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                               _
+#... t  -save  -e923 */((void)0) /*lint -restore */
+#... J_(this); QS_FUN_(path[ip]); QS_END_() } /*lint -restore */
+            QEP_ENTER_(path[ip]);                            // enter path[ip]
+..\..\qep\source\qhsm_ini.cpp  72  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                               _
+            QEP_ENTER_(path[ip]);                            // enter path[ip]
+..\..\qep\source\qhsm_ini.cpp  72  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-2-3, null statement not in line by itself
+                                                _
+#... save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_(QS_QEP_INIT_TRAN, QS::smObj_, this)
+..\..\qep\source\qhsm_ini.cpp  80  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                              // time stamp
+..\..\qep\source\qhsm_ini.cpp  81  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                            // this state machine object
+..\..\qep\source\qhsm_ini.cpp  82  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+#...   -e923 */((void)0) /*lint -restore */
+        QS_FUN_(m_state);                              // the new active state
+..\..\qep\source\qhsm_ini.cpp  83  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+_
+}
+..\..\qep\source\qhsm_ini.cpp  85  Note 952: Parameter 'e' (line 41) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qep\source\qhsm_ini.cpp  41  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qep\source\qhsm_top.cpp (C++)
+                                         _
+QState QHsm::top(QHsm *, QEvent const *) {
+..\..\qep\source\qhsm_top.cpp  35  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+
+--- Global Wrap-up
+
+Note 974: Worst case function for stack usage: 'QFsm::dispatch' is
+    non-deterministic, calls through a function pointer. See +stack for a full
+    report. [MISRA C++ Rule 7-5-4]

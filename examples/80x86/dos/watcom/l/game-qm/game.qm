@@ -1,0 +1,1565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model version="1.1.02" framework="qpcpp">
+  <documentation>Example model of the &quot;Fly 'n' Shoot&quot; game (see Chapter 1 of the PSiCC2 book).</documentation>
+  <package name="Events" stereotype="0x01">
+    <class name="ObjectPosEvt" superclass="../../0/0">
+      <attribute name="x" type="uint8_t" visibility="0x00" properties="0x00"/>
+      <attribute name="y" type="uint8_t" visibility="0x00" properties="0x00"/>
+    </class>
+    <class name="ObjectImageEvt" superclass="../../0/0">
+      <attribute name="x" type="uint8_t" visibility="0x00" properties="0x00"/>
+      <attribute name="y" type="int8_t" visibility="0x00" properties="0x00"/>
+      <attribute name="bmp" type="uint8_t" visibility="0x00" properties="0x00"/>
+    </class>
+    <class name="MineEvt" superclass="../../0/0">
+      <attribute name="id" type="uint8_t" visibility="0x00" properties="0x00"/>
+      <operation name="MineEvt" type="" visibility="0x00" properties="0x02">
+        <parameter name="sig" type="QSignal"/>
+        <parameter name="id" type="uint8_t"/>
+        <code>this-&gt;sig      = sig;
+this-&gt;dynamic_ = 0;
+this-&gt;id       = id;
+</code>
+      </operation>
+    </class>
+    <class name="ScoreEvt" superclass="../../0/0">
+      <attribute name="score" type="uint16_t" visibility="0x00" properties="0x00"/>
+      <operation name="ScoreEvt" type="" visibility="0x00" properties="0x02">
+        <parameter name="sig" type="QSignal"/>
+        <parameter name="score" type="uint16_t"/>
+        <code>this-&gt;sig      = sig;
+this-&gt;dynamic_ = 0;
+this-&gt;score    = score;
+</code>
+      </operation>
+    </class>
+  </package>
+  <package name="AOs" stereotype="0x02">
+    <class name="Tunnel" superclass="../../0/1">
+      <documentation>Tunnel Active Object</documentation>
+      <attribute name="m_blinkTimeEvt" type="QTimeEvt" visibility="0x02" properties="0x00"/>
+      <attribute name="m_screenTimeEvt" type="QTimeEvt" visibility="0x02" properties="0x00"/>
+      <attribute name="m_mines[GAME_MINES_MAX]" type="QHsm *" visibility="0x02" properties="0x00"/>
+      <attribute name="m_mine1_pool[GAME_MINES_MAX]" type="QHsm *" visibility="0x02" properties="0x00"/>
+      <attribute name="m_mine2_pool[GAME_MINES_MAX]" type="QHsm *" visibility="0x02" properties="0x00"/>
+      <attribute name="m_blink_ctr" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_last_mine_x" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_last_mine_y" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_wall_thickness_top" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_wall_thickness_bottom" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_minimal_gap" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <operation name="Tunnel" type="QActive((QStateHandler)&amp;Tunnel::initial), m_blinkTimeEvt(BLINK_TIMEOUT_SIG), m_screenTimeEvt(SCREEN_TIMEOUT_SIG), m_last_mine_x(0), m_last_mine_y(0)" visibility="0x00" properties="0x00">
+        <code>for (uint8_t n = 0; n &lt; GAME_MINES_MAX; ++n) {
+    m_mine1_pool[n] = Mine1_getInst(n); // initialize mine1-type pool
+    m_mine2_pool[n] = Mine2_getInst(n); // initialize mine2-type pool
+    m_mines[n] = (QHsm *)0;             // mine 'n' is unused
+}</code>
+      </operation>
+      <operation name="advance" type="void" visibility="0x02" properties="0x00">
+        <code>uint32_t rnd;
+uint32_t bmp1; // bimap representing 1 column of the image
+
+rnd = (random() &amp; 0xFF);
+
+// reduce the top wall thickness 18.75% of the time
+if ((rnd &lt; 48) &amp;&amp; (m_wall_thickness_top &gt; 0)) {
+    --m_wall_thickness_top;
+}
+
+// reduce the bottom wall thickness 18.75% of the time
+if ((rnd &gt; 208) &amp;&amp; (m_wall_thickness_bottom &gt; 0)) {
+    --m_wall_thickness_bottom;
+}
+
+rnd = (random() &amp; 0xFF);
+
+// grow the top wall thickness 18.75% of the time
+if ((rnd &lt; 48)
+    &amp;&amp; ((GAME_SCREEN_HEIGHT
+         - m_wall_thickness_top
+         - m_wall_thickness_bottom) &gt; m_minimal_gap)
+    &amp;&amp; ((m_last_mine_x &lt; (GAME_SCREEN_WIDTH - 5))
+        || (m_last_mine_y &gt; (m_wall_thickness_top + 1))))
+{
+    ++m_wall_thickness_top;
+}
+
+// grow the bottom wall thickness 18.75% of the time
+if ((rnd &gt; 208)
+    &amp;&amp; ((GAME_SCREEN_HEIGHT
+         - m_wall_thickness_top
+         - m_wall_thickness_bottom) &gt; m_minimal_gap)
+    &amp;&amp; ((m_last_mine_x &lt; (GAME_SCREEN_WIDTH - 5))
+         || (m_last_mine_y + 1
+            &lt; (GAME_SCREEN_HEIGHT - m_wall_thickness_bottom))))
+{
+    ++m_wall_thickness_bottom;
+}
+
+// advance the Tunnel by 1 game step to the left
+memmove(l_walls, l_walls + GAME_SPEED_X,
+        (GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT/8) - GAME_SPEED_X);
+
+bmp1 = (~(~0 &lt;&lt; m_wall_thickness_top))
+        | (~0 &lt;&lt; (GAME_SCREEN_HEIGHT
+                    - m_wall_thickness_bottom));
+
+l_walls[GAME_SCREEN_WIDTH - 1] = (uint8_t)bmp1;
+l_walls[GAME_SCREEN_WIDTH + GAME_SCREEN_WIDTH - 1]
+      = (uint8_t)(bmp1 &gt;&gt; 8);
+
+// copy the Tunnel layer to the main frame buffer
+memcpy(l_frame, l_walls, (GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT/8));</code>
+      </operation>
+      <operation name="plantMine" type="void" visibility="0x02" properties="0x00">
+        <code>uint32_t rnd = (random() &amp; 0xFF);
+
+if (m_last_mine_x &gt; 0) {
+    --m_last_mine_x; // shift the last Mine 1 position to the left
+}
+
+// last mine far enough?
+if ((m_last_mine_x + GAME_MINES_DIST_MIN &lt; GAME_SCREEN_WIDTH)
+    &amp;&amp; (rnd &lt; 8)) // place the mines only 5% of the time
+{
+    uint8_t n;
+    for (n = 0; n &lt; Q_DIM(m_mines); ++n) { // look for disabled mines
+        if (m_mines[n] == (QHsm *)0) {
+            break;
+        }
+    }
+    if (n &lt; Q_DIM(m_mines)) { // a disabled Mine found?
+        ObjectPosEvt ope; // event to dispatch to the Mine
+
+        rnd = (random() &amp; 0xFFFF);
+
+        if ((rnd &amp; 1) == 0) { // choose the type of the mine
+            m_mines[n] = m_mine1_pool[n];
+        }
+        else {
+            m_mines[n] = m_mine2_pool[n];
+        }
+
+        // new Mine is planted in the last column of the tunnel
+        m_last_mine_x = GAME_SCREEN_WIDTH;
+
+        // choose a random y-position for the Mine in the Tunnel
+        rnd %= (GAME_SCREEN_HEIGHT
+                - m_wall_thickness_top
+                - m_wall_thickness_bottom - 4);
+        m_last_mine_y = m_wall_thickness_top + 2 + rnd;
+
+        ope.sig = MINE_PLANT_SIG;
+        ope.x = m_last_mine_x;
+        ope.y = m_last_mine_y;
+        m_mines[n]-&gt;dispatch(&amp;ope); // direct dispatch
+    }
+}</code>
+      </operation>
+      <operation name="addImageAt" type="void" visibility="0x02" properties="0x00">
+        <parameter name="bmp" type="uint8_t"/>
+        <parameter name="x_pos" type="uint8_t"/>
+        <parameter name="y_pos" type="int8_t"/>
+        <code>uint8_t x; // the x-index of the ship image
+uint8_t w; // the width of the image
+
+Q_REQUIRE(bmp &lt; Q_DIM(l_bitmap));
+
+w = l_bitmap[bmp].width;
+if (w &gt; GAME_SCREEN_WIDTH - x_pos) {
+    w = GAME_SCREEN_WIDTH - x_pos;
+}
+for (x = 0; x &lt; w; ++x) {
+    uint32_t bmp1;
+    if (y_pos &gt;= 0) {
+        bmp1 = (l_bitmap[bmp].bits[x] &lt;&lt; (uint8_t)y_pos);
+    }
+    else {
+        bmp1 = (l_bitmap[bmp].bits[x] &gt;&gt; (uint8_t)(-y_pos));
+    }
+    l_frame[x_pos + x] |= (uint8_t)bmp1;
+    l_frame[x_pos + x + GAME_SCREEN_WIDTH] |= (uint8_t)(bmp1 &gt;&gt; 8);
+}</code>
+      </operation>
+      <operation name="dispatchToAllMines" type="void" visibility="0x02" properties="0x00">
+        <parameter name="e" type="QEvent const *"/>
+        <code>uint8_t n;
+for (n = 0; n &lt; GAME_MINES_MAX; ++n) {
+    if (m_mines[n] != (QHsm *)0) { // is the mine used?
+        m_mines[n]-&gt;dispatch(e);
+    }
+}</code>
+      </operation>
+      <operation name="isWallHit" type="uint8_t" visibility="0x02" properties="0x00">
+        <parameter name="bmp" type="uint8_t"/>
+        <parameter name="x_pos" type="uint8_t"/>
+        <parameter name="y_pos" type="uint8_t"/>
+        <code>uint8_t x;
+uint8_t w; // the width of the image
+
+Q_REQUIRE(bmp &lt; Q_DIM(l_bitmap));
+
+w = l_bitmap[bmp].width;
+if (w &gt; GAME_SCREEN_WIDTH - x_pos) {
+    w = GAME_SCREEN_WIDTH - x_pos;
+}
+for (x = 0; x &lt; w; ++x) {
+    uint32_t bmp1 = ((uint32_t)l_bitmap[bmp].bits[x] &lt;&lt; y_pos);
+    if (((l_walls[x_pos + x] &amp; (uint8_t)bmp1) != 0)
+        || ((l_walls[x_pos + x + GAME_SCREEN_WIDTH]
+             &amp; (uint8_t)(bmp1 &gt;&gt; 8)) != 0))
+    {
+        return (uint8_t)1;
+    }
+}
+return (uint8_t)0;</code>
+      </operation>
+      <statechart>
+        <initial target="../1/2">
+          <action>for (uint8_t n = 0; n &lt; GAME_MINES_MAX; ++n) {
+    me-&gt;m_mine1_pool[n]-&gt;init(); // take the initial tran. for Mine1
+    me-&gt;m_mine2_pool[n]-&gt;init(); // take the initial tran. for Mine2
+}
+
+randomSeed(1234); // seed the pseudo-random generator
+
+me-&gt;subscribe(TIME_TICK_SIG);
+me-&gt;subscribe(PLAYER_TRIGGER_SIG);
+me-&gt;subscribe(PLAYER_QUIT_SIG);
+
+// object dictionary for Tunnel object...
+QS_OBJ_DICTIONARY(&amp;l_tunnel);
+QS_OBJ_DICTIONARY(&amp;l_tunnel.m_blinkTimeEvt);
+QS_OBJ_DICTIONARY(&amp;l_tunnel.m_screenTimeEvt);
+
+// function dictionaries for Tunnel HSM...
+QS_FUN_DICTIONARY(&amp;Tunnel::initial);
+QS_FUN_DICTIONARY(&amp;Tunnel::final);
+QS_FUN_DICTIONARY(&amp;Tunnel::active);
+QS_FUN_DICTIONARY(&amp;Tunnel::playing);
+QS_FUN_DICTIONARY(&amp;Tunnel::demo);
+QS_FUN_DICTIONARY(&amp;Tunnel::game_over);
+QS_FUN_DICTIONARY(&amp;Tunnel::screen_saver);
+QS_FUN_DICTIONARY(&amp;Tunnel::screen_saver_hide);
+QS_FUN_DICTIONARY(&amp;Tunnel::screen_saver_show);
+
+// local signals...
+QS_SIG_DICTIONARY(BLINK_TIMEOUT_SIG,  &amp;l_tunnel);
+QS_SIG_DICTIONARY(SCREEN_TIMEOUT_SIG, &amp;l_tunnel);
+QS_SIG_DICTIONARY(SHIP_IMG_SIG,       &amp;l_tunnel);
+QS_SIG_DICTIONARY(MISSILE_IMG_SIG,    &amp;l_tunnel);
+QS_SIG_DICTIONARY(MINE_IMG_SIG,       &amp;l_tunnel);
+QS_SIG_DICTIONARY(MINE_DISABLED_SIG,  &amp;l_tunnel);
+QS_SIG_DICTIONARY(EXPLOSION_SIG,      &amp;l_tunnel);
+QS_SIG_DICTIONARY(SCORE_SIG,          &amp;l_tunnel);</action>
+        </initial>
+        <state name="active">
+          <entry/>
+          <exit/>
+          <tran trig="MINE_DISABLED">
+            <action>Q_ASSERT((((MineEvt const *)e)-&gt;id &lt; GAME_MINES_MAX)
+         &amp;&amp; (me-&gt;m_mines[((MineEvt const *)e)-&gt;id] != (QHsm *)0));
+me-&gt;m_mines[((MineEvt const *)e)-&gt;id] = (QHsm *)0;</action>
+          </tran>
+          <tran trig="PLAYER_QUIT" target="../../2"/>
+          <state name="demo">
+            <entry>me-&gt;m_last_mine_x = 0; // last mine at right edge of the tunnel
+me-&gt;m_last_mine_y = 0;
+
+// set the tunnel properties...
+me-&gt;m_wall_thickness_top = 0;
+me-&gt;m_wall_thickness_bottom = 0;
+me-&gt;m_minimal_gap = GAME_SCREEN_HEIGHT - 3;
+
+// erase the tunnel walls
+memset(l_walls, (uint8_t)0,
+       (GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT/8));
+
+me-&gt;m_blinkTimeEvt.postEvery(me, BSP_TICKS_PER_SEC/2); // 1/2 sec
+me-&gt;m_screenTimeEvt.postIn(me, BSP_TICKS_PER_SEC*20);  // 20 sec
+me-&gt;m_blink_ctr = 0; // init the blink counter</entry>
+            <exit>me-&gt;m_blinkTimeEvt.disarm();
+me-&gt;m_screenTimeEvt.disarm();</exit>
+            <tran trig="BLINK_TIMEOUT">
+              <action>me-&gt;m_blink_ctr ^= 1; // toggle the blink cunter</action>
+            </tran>
+            <tran trig="SCREEN_TIMEOUT" target="../../3"/>
+            <tran trig="TIME_TICK">
+              <action>me-&gt;advance();
+if (me-&gt;m_blink_ctr != 0) {
+// add the text bitmap into the frame buffer
+me-&gt;addImageAt(PRESS_BUTTON_BMP,
+               (GAME_SCREEN_WIDTH - 55)/2,
+               (GAME_SCREEN_HEIGHT - 8)/2);
+}
+BSP_drawBitmap(l_frame, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);</action>
+            </tran>
+            <tran trig="PLAYER_TRIGGER" target="../../5"/>
+          </state>
+          <state name="screen_saver">
+            <entry/>
+            <exit/>
+            <initial target="../2">
+              <action/>
+            </initial>
+            <tran trig="PLAYER_TRIGGER" target="../../2"/>
+            <state name="screen_saver_hide">
+              <entry>BSP_displayOff(); // power down the display
+me-&gt;m_screenTimeEvt.postIn(me, BSP_TICKS_PER_SEC*3); // 3s timeout</entry>
+              <exit>me-&gt;m_screenTimeEvt.disarm();
+BSP_displayOn(); // power up the display</exit>
+              <tran trig="SCREEN_TIMEOUT" target="../../3"/>
+            </state>
+            <state name="screen_saver_show">
+              <entry>// clear the screen frame buffer
+memset(l_frame, (uint8_t)0,
+       (GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT/8));
+uint32_t rnd = random();
+me-&gt;addImageAt(PRESS_BUTTON_BMP,
+        (uint8_t)(rnd % (GAME_SCREEN_WIDTH - 55)),
+        (int8_t) (rnd % (GAME_SCREEN_HEIGHT - 8)));
+BSP_drawBitmap(l_frame, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
+me-&gt;m_screenTimeEvt.postIn(me, BSP_TICKS_PER_SEC/3); // 1/3 sec</entry>
+              <exit>me-&gt;m_screenTimeEvt.disarm();
+// clear the screen frame buffer
+memset(l_frame, (uint8_t)0,
+       (GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT/8));
+BSP_drawBitmap(l_frame, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);</exit>
+              <tran trig="SCREEN_TIMEOUT" target="../../2"/>
+            </state>
+          </state>
+          <state name="game_over">
+            <entry>me-&gt;m_blinkTimeEvt.postEvery(me, BSP_TICKS_PER_SEC/2);  // 1/2 sec
+me-&gt;m_screenTimeEvt.postIn(me,
+        BSP_TICKS_PER_SEC*5); // 5 sec
+me-&gt;m_blink_ctr = 0;
+BSP_drawNString((GAME_SCREEN_WIDTH - 6*9)/2, 0, &quot;Game Over&quot;);</entry>
+            <exit>me-&gt;m_blinkTimeEvt.disarm();
+me-&gt;m_screenTimeEvt.disarm();
+BSP_updateScore(0); // update the score on the display</exit>
+            <tran trig="BLINK_TIMEOUT">
+              <action>me-&gt;m_blink_ctr ^= 1; // toggle the blink couner
+BSP_drawNString((GAME_SCREEN_WIDTH - 6*9)/2, 0,
+                 ((me-&gt;m_blink_ctr == 0)
+                 ? &quot;Game Over&quot;
+                 : &quot;         &quot;));</action>
+            </tran>
+            <tran trig="SCREEN_TIMEOUT" target="../../2"/>
+          </state>
+          <state name="playing">
+            <entry>me-&gt;m_minimal_gap = GAME_SCREEN_HEIGHT - 3;
+
+// erase the walls
+memset(l_walls, (uint8_t)0,
+       (GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT/8));
+
+static QEvent const takeoff = { TAKE_OFF_SIG, 0 };
+AO_Ship-&gt;postFIFO(&amp;takeoff); // post the TAKEOFF sig</entry>
+            <exit>QEvent recycle;
+recycle.sig = MINE_RECYCLE_SIG;
+me-&gt;dispatchToAllMines(&amp;recycle); // recycle all Mines</exit>
+            <tran trig="TIME_TICK">
+              <action>// render this frame on the display
+BSP_drawBitmap(l_frame, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
+
+me-&gt;advance();
+me-&gt;plantMine();
+me-&gt;dispatchToAllMines(e);</action>
+            </tran>
+            <tran trig="SHIP_IMG">
+              <action>uint8_t x  = (uint8_t)((ObjectImageEvt const *)e)-&gt;x;
+int8_t y  =  (int8_t)((ObjectImageEvt const *)e)-&gt;y;
+uint8_t bmp = (uint8_t)((ObjectImageEvt const *)e)-&gt;bmp;
+
+// did the Ship/Missile hit the tunnel wall?
+if (me-&gt;isWallHit(bmp, x, y)) {
+    static QEvent const hit = { HIT_WALL_SIG, 0};
+    AO_Ship-&gt;postFIFO(&amp;hit);
+}
+me-&gt;addImageAt(bmp, x, y);
+me-&gt;dispatchToAllMines(e); // let Mines check for hits</action>
+            </tran>
+            <tran trig="MISSILE_IMG">
+              <action>uint8_t x  = (uint8_t)((ObjectImageEvt const *)e)-&gt;x;
+int8_t y  =  (int8_t)((ObjectImageEvt const *)e)-&gt;y;
+uint8_t bmp = (uint8_t)((ObjectImageEvt const *)e)-&gt;bmp;
+
+// did the Ship/Missile hit the tunnel wall?
+if (me-&gt;isWallHit(bmp, x, y)) {
+    static QEvent const hit = { HIT_WALL_SIG, 0};
+    AO_Missile-&gt;postFIFO(&amp;hit);
+}
+me-&gt;addImageAt(bmp, x, y);
+me-&gt;dispatchToAllMines(e); // let Mines check for hits</action>
+            </tran>
+            <tran trig="MINE_IMG">
+              <action>me-&gt;addImageAt(((ObjectImageEvt const *)e)-&gt;bmp,
+               ((ObjectImageEvt const *)e)-&gt;x,
+               ((ObjectImageEvt const *)e)-&gt;y);</action>
+            </tran>
+            <tran trig="EXPLOSION">
+              <action>me-&gt;addImageAt(((ObjectImageEvt const *)e)-&gt;bmp,
+               ((ObjectImageEvt const *)e)-&gt;x,
+               ((ObjectImageEvt const *)e)-&gt;y);</action>
+            </tran>
+            <tran trig="SCORE">
+              <action>BSP_updateScore(((ScoreEvt const *)e)-&gt;score);
+
+// increase difficulty of the game:
+// the tunnel gets narrower as the score goes up
+me-&gt;m_minimal_gap = GAME_SCREEN_HEIGHT - 3
+                  - ((ScoreEvt const *)e)-&gt;score/2000;</action>
+            </tran>
+            <tran trig="GAME_OVER" target="../../4">
+              <action>uint16_t score = ((ScoreEvt const *)e)-&gt;score;
+char str[5];
+
+BSP_updateScore(score);
+
+// clear the screen
+memset(l_frame, (uint8_t)0,
+       (GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT/8));
+BSP_drawBitmap(l_frame, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
+
+// Output the final score to the screen
+BSP_drawNString((GAME_SCREEN_WIDTH - 6*10)/2, 1, &quot;Score:&quot;);
+str[4] = '\0'; // zero-terminate the string
+str[3] = '0' + (score % 10); score /= 10;
+str[2] = '0' + (score % 10); score /= 10;
+str[1] = '0' + (score % 10); score /= 10;
+str[0] = '0' + (score % 10);
+BSP_drawNString((GAME_SCREEN_WIDTH - 6*10)/2 + 6*6, 1, str);</action>
+            </tran>
+          </state>
+        </state>
+        <state name="final">
+          <entry>// clear the screen
+memset(l_frame, (uint8_t)0,
+       (GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT/8));
+BSP_drawBitmap(l_frame, GAME_SCREEN_WIDTH, GAME_SCREEN_HEIGHT);
+QF::stop(); // stop QF and cleanup</entry>
+          <exit/>
+        </state>
+        <state_diagram size="66,76">
+          <state_glyph ref="2" node="3,69,23,5">
+            <text box="1,2,7,2"/>
+          </state_glyph>
+          <state_glyph ref="1" node="3,4,59,63"/>
+          <state_glyph ref="1/2" node="5,14,21,20">
+            <text box="1,2,6,2"/>
+            <text box="1,4,5,2"/>
+          </state_glyph>
+          <state_glyph ref="1/4" node="32,51,26,14">
+            <text box="1,2,6,2"/>
+            <text box="1,4,5,2"/>
+          </state_glyph>
+          <state_glyph ref="1/5" node="5,36,21,29">
+            <text box="1,2,6,2"/>
+            <text box="1,4,5,2"/>
+          </state_glyph>
+          <state_glyph ref="1/3" node="32,15,26,32"/>
+          <state_glyph ref="1/3/2" node="34,23,18,10">
+            <text box="1,2,5,2"/>
+            <text box="1,4,5,2"/>
+          </state_glyph>
+          <state_glyph ref="1/3/3" node="34,35,18,10">
+            <text box="1,2,5,2"/>
+            <text box="1,4,5,2"/>
+          </state_glyph>
+          <initial_glyph ref="0" conn="3,2,5,1,25,14,-2">
+            <text box="1,-2,10,2"/>
+          </initial_glyph>
+          <tran_glyph ref="1/0" conn="3,9,3,-1,16">
+            <text box="0,-2,14,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/1" conn="3,12,3,1,61,59,-38">
+            <text box="0,-2,11,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/2/1" conn="5,29,3,3,27">
+            <text box="0,-2,13,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/2/2" conn="5,23,3,-1,14">
+            <text box="0,-2,12,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/2/3" conn="5,32,3,1,23,6,-2">
+            <text box="0,-2,14,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/4/0" conn="32,63,3,-1,18">
+            <text box="0,-2,12,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/4/1" conn="32,60,3,1,28,-11,-30,-18,-4">
+            <text box="0,-2,14,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/5/0" conn="5,45,3,-1,14">
+            <text box="0,-2,9,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/5/1" conn="5,48,3,-1,14">
+            <text box="0,-2,9,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/5/4" conn="5,57,3,-1,14">
+            <text box="0,-2,11,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/5/5" conn="5,60,3,-1,14">
+            <text box="0,-2,6,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/5/6" conn="5,63,3,3,24,-10,3">
+            <text box="0,-2,10,2"/>
+          </tran_glyph>
+          <initial_glyph ref="1/3/0" conn="33,19,5,1,23,6,-4">
+            <text box="1,0,6,2"/>
+          </initial_glyph>
+          <tran_glyph ref="1/3/1" conn="32,22,3,1,28,-9,-30,5,-4">
+            <text box="0,-2,13,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/3/2/0" conn="34,31,3,1,20,6,-2">
+            <text box="0,-2,13,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/3/3/0" conn="34,43,3,1,22,-15,-4">
+            <text box="0,-2,13,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/5/2" conn="5,51,3,-1,14">
+            <text box="0,-2,12,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/2/0" conn="5,26,3,-1,14">
+            <text box="0,-2,13,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/5/3" conn="5,54,3,-1,14">
+            <text box="0,-2,9,2"/>
+          </tran_glyph>
+        </state_diagram>
+      </statechart>
+    </class>
+    <class name="Ship" superclass="../../0/1">
+      <documentation>Ship Active Object</documentation>
+      <attribute name="m_x" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_y" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_exp_ctr" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_score" type="uint16_t" visibility="0x02" properties="0x00"/>
+      <operation name="Ship" type="QActive((QStateHandler)&amp;Ship::initial), m_x(GAME_SHIP_X), m_y(GAME_SHIP_Y)" visibility="0x00" properties="0x02"/>
+      <statechart>
+        <initial target="../1">
+          <action>me-&gt;subscribe(TIME_TICK_SIG);
+me-&gt;subscribe(PLAYER_TRIGGER_SIG);
+
+// object dictionary for Ship object...
+QS_OBJ_DICTIONARY(&amp;l_ship);
+
+// function dictionaries for Ship HSM...
+QS_FUN_DICTIONARY(&amp;Ship::initial);
+QS_FUN_DICTIONARY(&amp;Ship::active);
+QS_FUN_DICTIONARY(&amp;Ship::parked);
+QS_FUN_DICTIONARY(&amp;Ship::flying);
+QS_FUN_DICTIONARY(&amp;Ship::exploding);
+
+// local signals...
+QS_SIG_DICTIONARY(PLAYER_SHIP_MOVE_SIG, &amp;l_ship);
+QS_SIG_DICTIONARY(TAKE_OFF_SIG,         &amp;l_ship);
+QS_SIG_DICTIONARY(HIT_WALL_SIG,         &amp;l_ship);
+QS_SIG_DICTIONARY(HIT_MINE_SIG,         &amp;l_ship);
+QS_SIG_DICTIONARY(DESTROYED_MINE_SIG,   &amp;l_ship);</action>
+        </initial>
+        <state name="active">
+          <entry/>
+          <exit/>
+          <initial target="../2">
+            <action/>
+          </initial>
+          <tran trig="PLAYER_SHIP_MOVE">
+            <action brief="\me-&gt;x = e-&gt;x;\me-&gt;y = e-&gt;y">me-&gt;m_x = ((ObjectPosEvt const *)e)-&gt;x;
+me-&gt;m_y = ((ObjectPosEvt const *)e)-&gt;y;</action>
+          </tran>
+          <state name="parked">
+            <entry/>
+            <exit/>
+            <tran trig="TAKE_OFF" target="../../3"/>
+          </state>
+          <state name="flying">
+            <entry>ScoreEvt *sev;
+
+me-&gt;m_score = 0;  // reset the score
+sev = Q_NEW(ScoreEvt, SCORE_SIG);
+sev-&gt;score = me-&gt;m_score;
+AO_Tunnel-&gt;postFIFO(sev);</entry>
+            <exit/>
+            <tran trig="TIME_TICK">
+              <action>// tell the Tunnel to draw the Ship and test for hits
+ObjectImageEvt *oie = Q_NEW(ObjectImageEvt, SHIP_IMG_SIG);
+oie-&gt;x   = me-&gt;m_x;
+oie-&gt;y   = me-&gt;m_y;
+oie-&gt;bmp = SHIP_BMP;
+AO_Tunnel-&gt;postFIFO(oie);
+
+++me-&gt;m_score; // increment the score for surviving another tick
+
+if ((me-&gt;m_score % 10) == 0) { // is the score &quot;round&quot;?
+    ScoreEvt *sev = Q_NEW(ScoreEvt, SCORE_SIG);
+    sev-&gt;score = me-&gt;m_score;
+    AO_Tunnel-&gt;postFIFO(sev);
+}</action>
+            </tran>
+            <tran trig="PLAYER_TRIGGER">
+              <action>ObjectPosEvt *ope = Q_NEW(ObjectPosEvt, MISSILE_FIRE_SIG);
+ope-&gt;x = me-&gt;m_x;
+ope-&gt;y = me-&gt;m_y + SHIP_HEIGHT - 1;
+AO_Missile-&gt;postFIFO(ope);</action>
+            </tran>
+            <tran trig="DESTROYED_MINE">
+              <action>me-&gt;m_score += ((ScoreEvt const *)e)-&gt;score;
+// the score will be sent to the Tunnel by the next TIME_TICK</action>
+            </tran>
+            <tran trig="HIT_WALL" target="../../4"/>
+            <tran trig="HIT_MINE" target="../../4"/>
+          </state>
+          <state name="exploding">
+            <entry>me-&gt;m_exp_ctr = 0;</entry>
+            <exit/>
+            <tran trig="TIME_TICK">
+              <choice guard="me-&gt;m_exp_ctr &lt; 15">
+                <action>ObjectImageEvt *oie;
+
+++me-&gt;m_exp_ctr;
+
+ // tell the Tunnel to draw the current stage of Explosion
+oie = Q_NEW(ObjectImageEvt, EXPLOSION_SIG);
+oie-&gt;bmp = EXPLOSION0_BMP + (me-&gt;m_exp_ctr &gt;&gt; 2);
+oie-&gt;x   = me-&gt;m_x; // x of explosion
+oie-&gt;y   = (int8_t)((int)me-&gt;m_y - 4 + SHIP_HEIGHT);
+AO_Tunnel-&gt;postFIFO(oie);</action>
+              </choice>
+              <choice guard="else" target="../../../2">
+                <action>ScoreEvt *gameOver = Q_NEW(ScoreEvt, GAME_OVER_SIG);
+gameOver-&gt;score = me-&gt;m_score;
+AO_Tunnel-&gt;postFIFO(gameOver);</action>
+              </choice>
+            </tran>
+          </state>
+        </state>
+        <state_diagram size="42,67">
+          <state_glyph ref="1" node="3,4,35,61"/>
+          <state_glyph ref="1/2" node="5,16,27,8"/>
+          <state_glyph ref="1/3" node="5,26,27,21">
+            <text box="1,2,5,2"/>
+          </state_glyph>
+          <state_glyph ref="1/4" node="5,49,27,14">
+            <text box="1,2,15,4"/>
+          </state_glyph>
+          <tran_glyph ref="1/1" conn="3,11,3,-1,17">
+            <text box="1,-2,15,6"/>
+          </tran_glyph>
+          <initial_glyph ref="0" conn="3,2,5,1,37,4,-2">
+            <text box="1,-2,6,2"/>
+          </initial_glyph>
+          <initial_glyph ref="1/0" conn="4,8,5,1,30,10,-2">
+            <text box="-8,-2,6,2"/>
+          </initial_glyph>
+          <tran_glyph ref="1/2/0" conn="5,22,3,1,29,6,-2">
+            <text box="0,-2,8,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/3/0" conn="5,33,3,-1,19">
+            <text box="0,-2,9,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/3/1" conn="5,36,3,-1,19">
+            <text box="0,-2,13,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/3/2" conn="5,39,3,-1,19">
+            <text box="0,-2,13,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/3/3" conn="5,42,3,1,29,9,-2">
+            <text box="0,-2,8,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/3/4" conn="5,45,3,1,29,6,-2">
+            <text box="0,-2,10,2"/>
+          </tran_glyph>
+          <tran_glyph ref="1/4/0" conn="5,57,3,-1,9">
+            <text box="0,-2,10,2"/>
+          </tran_glyph>
+          <choice_glyph ref="1/4/0/1" conn="14,57,4,1,4,22,-41,-4">
+            <text box="1,4,6,2"/>
+          </choice_glyph>
+          <choice_glyph ref="1/4/0/0" conn="14,57,5,-1,16">
+            <text box="1,0,15,2"/>
+          </choice_glyph>
+        </state_diagram>
+      </statechart>
+    </class>
+    <class name="Missile" superclass="../../0/1">
+      <documentation>Missile Active Object</documentation>
+      <attribute name="m_x" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_y" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_exp_ctr" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <operation name="Missile" type="QActive((QStateHandler)&amp;Missile::initial)" visibility="0x00" properties="0x02"/>
+      <statechart>
+        <initial target="../1">
+          <action>me-&gt;subscribe(TIME_TICK_SIG);
+
+// object dictionary for Missile object...
+QS_OBJ_DICTIONARY(&amp;l_missile);
+
+// dictionaries for Missile HSM...
+QS_FUN_DICTIONARY(&amp;Missile::initial);
+QS_FUN_DICTIONARY(&amp;Missile::armed);
+QS_FUN_DICTIONARY(&amp;Missile::flying);
+QS_FUN_DICTIONARY(&amp;Missile::exploding);
+
+// local signals...
+QS_SIG_DICTIONARY(MISSILE_FIRE_SIG,   &amp;l_missile);
+QS_SIG_DICTIONARY(HIT_WALL_SIG,       &amp;l_missile);
+QS_SIG_DICTIONARY(DESTROYED_MINE_SIG, &amp;l_missile);</action>
+        </initial>
+        <state name="armed">
+          <entry/>
+          <exit/>
+          <tran trig="MISSILE_FIRE" target="../../2">
+            <action>// initialize position from the Ship
+me-&gt;m_x = ((ObjectPosEvt const *)e)-&gt;x;
+me-&gt;m_y = ((ObjectPosEvt const *)e)-&gt;y;</action>
+          </tran>
+        </state>
+        <state name="flying">
+          <entry/>
+          <exit/>
+          <tran trig="TIME_TICK">
+            <action>ObjectImageEvt *oie;</action>
+            <choice guard="me-&gt;m_x + GAME_MISSILE_SPEED_X &lt; GAME_SCREEN_WIDTH">
+              <action>me-&gt;m_x += GAME_MISSILE_SPEED_X;
+// tell the Tunnel to draw the Missile and test for wall hits
+oie = Q_NEW(ObjectImageEvt, MISSILE_IMG_SIG);
+oie-&gt;x   = me-&gt;m_x;
+oie-&gt;y   = me-&gt;m_y;
+oie-&gt;bmp = MISSILE_BMP;
+AO_Tunnel-&gt;postFIFO(oie);</action>
+            </choice>
+            <choice guard="else" target="../../../1">
+              <action/>
+            </choice>
+          </tran>
+          <tran trig="HIT_WALL" target="../../3"/>
+          <tran trig="DESTROYED_MINE" target="../../1">
+            <action>// tell the Ship the score for destroing this Mine
+AO_Ship-&gt;postFIFO(e);</action>
+          </tran>
+        </state>
+        <state name="exploding">
+          <entry>me-&gt;m_exp_ctr = 0;</entry>
+          <exit/>
+          <tran trig="TIME_TICK">
+            <choice guard="(me-&gt;m_x &gt;= GAME_SPEED_X) &amp;&amp; (me-&gt;m_exp_ctr &lt; 15)">
+              <action brief="...">ObjectImageEvt *oie;
+
+++me-&gt;m_exp_ctr;  // advance the explosion counter
+me-&gt;m_x -= GAME_SPEED_X; // move the explosion by one step
+
+// tell the Tunnel to render the current stage of Explosion
+oie = Q_NEW(ObjectImageEvt, EXPLOSION_SIG);
+oie-&gt;x   = me-&gt;m_x + 3; // x-pos of explosion
+oie-&gt;y   = (int8_t)((int)me-&gt;m_y - 4); // y-pos
+oie-&gt;bmp = EXPLOSION0_BMP + (me-&gt;m_exp_ctr &gt;&gt; 2);
+AO_Tunnel-&gt;postFIFO(oie);</action>
+            </choice>
+            <choice guard="else" target="../../../1">
+              <action/>
+            </choice>
+          </tran>
+        </state>
+        <state_diagram size="48,55">
+          <state_glyph ref="1" node="3,5,35,8"/>
+          <state_glyph ref="2" node="3,15,35,20"/>
+          <state_glyph ref="3" node="3,37,35,16">
+            <text box="1,2,15,4"/>
+          </state_glyph>
+          <initial_glyph ref="0" conn="3,3,5,1,37,4,-2">
+            <text box="1,-2,6,2"/>
+          </initial_glyph>
+          <tran_glyph ref="1/0" conn="3,11,3,1,37,6,-2">
+            <text box="0,-2,11,2"/>
+          </tran_glyph>
+          <tran_glyph ref="2/0" conn="3,21,3,-1,9">
+            <text box="0,-2,9,2"/>
+          </tran_glyph>
+          <choice_glyph ref="2/0/1" conn="12,21,4,1,5,30,-17,-4">
+            <text box="1,5,6,2"/>
+          </choice_glyph>
+          <choice_glyph ref="2/0/0" conn="12,21,5,-1,19">
+            <text box="1,0,24,4"/>
+          </choice_glyph>
+          <tran_glyph ref="2/1" conn="3,33,3,1,37,6,-2">
+            <text box="0,-2,9,2"/>
+          </tran_glyph>
+          <tran_glyph ref="2/2" conn="3,30,3,1,41,-21,-6">
+            <text box="0,-2,15,2"/>
+          </tran_glyph>
+          <tran_glyph ref="3/0" conn="3,46,3,-1,9">
+            <text box="0,-2,8,2"/>
+          </tran_glyph>
+          <choice_glyph ref="3/0/1" conn="12,46,4,1,5,34,-42,-8">
+            <text box="1,5,6,2"/>
+          </choice_glyph>
+          <choice_glyph ref="3/0/0" conn="12,46,5,-1,22">
+            <text box="1,0,21,4"/>
+          </choice_glyph>
+        </state_diagram>
+      </statechart>
+    </class>
+    <class name="Mine1" superclass="../../0/2">
+      <documentation>The Mine1 orthogonal component</documentation>
+      <attribute name="m_x" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_y" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_exp_ctr" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <operation name="Mine1" type="QHsm((QStateHandler)&amp;Mine1::initial)" visibility="0x00" properties="0x02"/>
+      <statechart>
+        <initial target="../1">
+          <action>static uint8_t dict_sent;
+if (!dict_sent) {
+    // object dictionaries for Mine1 pool...
+    QS_OBJ_DICTIONARY(&amp;l_mine1[0]);
+    QS_OBJ_DICTIONARY(&amp;l_mine1[1]);
+    QS_OBJ_DICTIONARY(&amp;l_mine1[2]);
+    QS_OBJ_DICTIONARY(&amp;l_mine1[3]);
+    QS_OBJ_DICTIONARY(&amp;l_mine1[4]);
+
+    // function dictionaries for Mine1 HSM...
+    QS_FUN_DICTIONARY(&amp;Mine1::initial);
+    QS_FUN_DICTIONARY(&amp;Mine1::unused);
+    QS_FUN_DICTIONARY(&amp;Mine1::used);
+    QS_FUN_DICTIONARY(&amp;Mine1::planted);
+    QS_FUN_DICTIONARY(&amp;Mine1::exploding);
+
+    dict_sent = 1;
+}
+
+// local signals...
+QS_SIG_DICTIONARY(MINE_PLANT_SIG,    me);
+QS_SIG_DICTIONARY(MINE_DISABLED_SIG, me);
+QS_SIG_DICTIONARY(MINE_RECYCLE_SIG,  me);
+QS_SIG_DICTIONARY(SHIP_IMG_SIG,      me);
+QS_SIG_DICTIONARY(MISSILE_IMG_SIG,   me);</action>
+        </initial>
+        <state name="unused">
+          <entry/>
+          <exit/>
+          <tran trig="MINE_PLANT" target="../../2/1">
+            <action>me-&gt;m_x = ((ObjectPosEvt const *)e)-&gt;x;
+me-&gt;m_y = ((ObjectPosEvt const *)e)-&gt;y;</action>
+          </tran>
+        </state>
+        <state name="used">
+          <entry/>
+          <exit>// tell the Tunnel that this mine is becoming disabled
+MineEvt *mev = Q_NEW(MineEvt, MINE_DISABLED_SIG);
+mev-&gt;id = MINE_ID(me);
+AO_Tunnel-&gt;postFIFO(mev);</exit>
+          <tran trig="MINE_RECYCLE" target="../../1"/>
+          <state name="planted">
+            <entry/>
+            <exit/>
+            <tran trig="TIME_TICK">
+              <choice guard="me-&gt;m_x &gt;= GAME_SPEED_X">
+                <action>ObjectImageEvt *oie;
+
+me-&gt;m_x -= GAME_SPEED_X; // move the mine 1 step
+
+// tell the Tunnel to draw the Mine
+oie = Q_NEW(ObjectImageEvt, MINE_IMG_SIG);
+oie-&gt;x   = me-&gt;m_x;
+oie-&gt;y   = me-&gt;m_y;
+oie-&gt;bmp = MINE1_BMP;
+AO_Tunnel-&gt;postFIFO(oie);</action>
+              </choice>
+              <choice guard="else" target="../../../../1">
+                <action/>
+              </choice>
+            </tran>
+            <tran trig="SHIP_IMG">
+              <action>uint8_t x = (uint8_t)((ObjectImageEvt const *)e)-&gt;x;
+uint8_t y = (uint8_t)((ObjectImageEvt const *)e)-&gt;y;
+uint8_t bmp = (uint8_t)((ObjectImageEvt const *)e)-&gt;bmp;</action>
+              <choice guard="do_bitmaps_overlap(MINE1_BMP, me-&gt;m_x, me-&gt;m_y, bmp, x, y)" target="../../../../1">
+                <action brief=" ">// Hit event with the type of the Mine1
+static MineEvt const mine1_hit(HIT_MINE_SIG, 1);
+AO_Ship-&gt;postFIFO(&amp;mine1_hit);
+
+// go straight to 'disabled' and let the Ship do the exploding</action>
+              </choice>
+            </tran>
+            <tran trig="MISSILE_IMG">
+              <action>uint8_t x = (uint8_t)((ObjectImageEvt const *)e)-&gt;x;
+uint8_t y = (uint8_t)((ObjectImageEvt const *)e)-&gt;y;
+uint8_t bmp = (uint8_t)((ObjectImageEvt const *)e)-&gt;bmp;</action>
+              <choice guard="do_bitmaps_overlap(MINE1_BMP, me-&gt;m_x, me-&gt;m_y, bmp, x, y)" target="../../../2">
+                <action brief=" ">// Score event with the score for destroying Mine1
+static ScoreEvt const mine1_destroyed(DESTROYED_MINE_SIG, 25);
+AO_Missile-&gt;postFIFO(&amp;mine1_destroyed);</action>
+              </choice>
+            </tran>
+          </state>
+          <state name="exploding">
+            <entry>me-&gt;m_exp_ctr = 0;</entry>
+            <exit/>
+            <tran trig="TIME_TICK">
+              <choice guard="(me-&gt;m_x &gt;= GAME_SPEED_X) &amp;&amp; (me-&gt;m_exp_ctr &lt; 15)">
+                <action>ObjectImageEvt *oie;
+
+++me-&gt;m_exp_ctr; // advance the explosion counter
+me-&gt;m_x -= GAME_SPEED_X; // move explosion by 1 step
+
+// tell the Game to render the current stage of Explosion
+oie = Q_NEW(ObjectImageEvt, EXPLOSION_SIG);
+oie-&gt;x   = me-&gt;m_x + 1; // x of explosion
+oie-&gt;y   = (int8_t)((int)me-&gt;m_y - 4 + 2); // y of explosion
+oie-&gt;bmp = EXPLOSION0_BMP + (me-&gt;m_exp_ctr &gt;&gt; 2);
+AO_Tunnel-&gt;postFIFO(oie);</action>
+              </choice>
+              <choice guard="else" target="../../../../1">
+                <action/>
+              </choice>
+            </tran>
+          </state>
+        </state>
+        <state_diagram size="54,67">
+          <state_glyph ref="1" node="3,4,27,8"/>
+          <state_glyph ref="2" node="3,14,39,51">
+            <text box="1,2,5,2"/>
+          </state_glyph>
+          <state_glyph ref="2/1" node="5,23,33,24"/>
+          <state_glyph ref="2/2" node="5,49,33,14">
+            <text box="1,2,5,2"/>
+          </state_glyph>
+          <initial_glyph ref="0" conn="3,2,5,1,29,4,-2">
+            <text box="0,-2,5,2"/>
+          </initial_glyph>
+          <tran_glyph ref="1/0" conn="3,10,3,1,43,15,-8">
+            <text box="0,-2,10,2"/>
+          </tran_glyph>
+          <tran_glyph ref="2/0" conn="3,21,3,1,41,-13,-14">
+            <text box="0,-2,11,2"/>
+          </tran_glyph>
+          <tran_glyph ref="2/1/0" conn="5,30,3,-1,11">
+            <text box="0,-2,10,2"/>
+          </tran_glyph>
+          <choice_glyph ref="2/1/0/1" conn="16,30,4,1,4,32,-26,-18">
+            <text box="1,4,6,2"/>
+          </choice_glyph>
+          <tran_glyph ref="2/1/1" conn="5,37,3,-1,11">
+            <text box="0,-2,8,2"/>
+          </tran_glyph>
+          <tran_glyph ref="2/1/2" conn="5,42,3,-1,11">
+            <text box="0,-2,11,2"/>
+          </tran_glyph>
+          <choice_glyph ref="2/1/2/0" conn="16,42,5,1,24,9,-2">
+            <text box="1,0,22,4"/>
+          </choice_glyph>
+          <tran_glyph ref="2/2/0" conn="5,56,3,-1,11">
+            <text box="0,-2,9,2"/>
+          </tran_glyph>
+          <choice_glyph ref="2/2/0/1" conn="16,56,4,1,5,36,-53,-22">
+            <text box="1,5,6,2"/>
+          </choice_glyph>
+          <choice_glyph ref="2/2/0/0" conn="16,56,5,-1,20">
+            <text box="1,0,21,4"/>
+          </choice_glyph>
+          <choice_glyph ref="2/1/0/0" conn="16,30,5,-1,20">
+            <text box="1,0,20,2"/>
+          </choice_glyph>
+          <choice_glyph ref="2/1/1/0" conn="16,37,5,1,34,-29,-20">
+            <text box="1,0,22,4"/>
+          </choice_glyph>
+        </state_diagram>
+      </statechart>
+    </class>
+    <class name="Mine2" superclass="../../0/2">
+      <documentation>The Mine2 orthogonal component</documentation>
+      <attribute name="m_x" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_y" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <attribute name="m_exp_ctr" type="uint8_t" visibility="0x02" properties="0x00"/>
+      <operation name="Mine2" type="QHsm((QStateHandler)&amp;Mine2::initial)" visibility="0x00" properties="0x02"/>
+      <statechart>
+        <initial target="../1">
+          <action>static uint8_t dict_sent;
+if (!dict_sent) {
+    // object dictionaries for Mine2 pool...
+    QS_OBJ_DICTIONARY(&amp;l_mine2[0]);
+    QS_OBJ_DICTIONARY(&amp;l_mine2[1]);
+    QS_OBJ_DICTIONARY(&amp;l_mine2[2]);
+    QS_OBJ_DICTIONARY(&amp;l_mine2[3]);
+    QS_OBJ_DICTIONARY(&amp;l_mine2[4]);
+
+    // function dictionaries for Mine2 HSM...
+    QS_FUN_DICTIONARY(&amp;Mine2::initial);
+    QS_FUN_DICTIONARY(&amp;Mine2::unused);
+    QS_FUN_DICTIONARY(&amp;Mine2::used);
+    QS_FUN_DICTIONARY(&amp;Mine2::planted);
+    QS_FUN_DICTIONARY(&amp;Mine2::exploding);
+
+    dict_sent = 1;
+}
+
+// local signals...
+QS_SIG_DICTIONARY(MINE_PLANT_SIG,    me);
+QS_SIG_DICTIONARY(MINE_DISABLED_SIG, me);
+QS_SIG_DICTIONARY(MINE_RECYCLE_SIG,  me);
+QS_SIG_DICTIONARY(SHIP_IMG_SIG,      me);
+QS_SIG_DICTIONARY(MISSILE_IMG_SIG,   me);</action>
+        </initial>
+        <state name="unused">
+          <entry/>
+          <exit/>
+          <tran trig="MINE_PLANT" target="../../2/1">
+            <action>me-&gt;m_x = ((ObjectPosEvt const *)e)-&gt;x;
+me-&gt;m_y = ((ObjectPosEvt const *)e)-&gt;y;</action>
+          </tran>
+        </state>
+        <state name="used">
+          <entry/>
+          <exit>// tell the Tunnel that this mine is becoming disabled
+MineEvt *mev = Q_NEW(MineEvt, MINE_DISABLED_SIG);
+mev-&gt;id = MINE_ID(me);
+AO_Tunnel-&gt;postFIFO(mev);</exit>
+          <tran trig="MINE_RECYCLE" target="../../1"/>
+          <state name="planted">
+            <entry/>
+            <exit/>
+            <tran trig="TIME_TICK">
+              <choice guard="me-&gt;m_x &gt;= GAME_SPEED_X">
+                <action>ObjectImageEvt *oie;
+
+me-&gt;m_x -= GAME_SPEED_X; // move the mine 1 step
+
+// tell the Tunnel to draw the Mine
+oie = Q_NEW(ObjectImageEvt, MINE_IMG_SIG);
+oie-&gt;x   = me-&gt;m_x;
+oie-&gt;y   = me-&gt;m_y;
+oie-&gt;bmp = MINE2_BMP;
+AO_Tunnel-&gt;postFIFO(oie);</action>
+              </choice>
+              <choice guard="else" target="../../../../1">
+                <action/>
+              </choice>
+            </tran>
+            <tran trig="SHIP_IMG">
+              <action>uint8_t x = (uint8_t)((ObjectImageEvt const *)e)-&gt;x;
+uint8_t y = (uint8_t)((ObjectImageEvt const *)e)-&gt;y;
+uint8_t bmp = (uint8_t)((ObjectImageEvt const *)e)-&gt;bmp;</action>
+              <choice guard="do_bitmaps_overlap(MINE2_BMP, me-&gt;m_x, me-&gt;m_y, bmp, x, y)" target="../../../../1">
+                <action>// Hit event with the type of the Mine2
+static MineEvt const mine2_hit(HIT_MINE_SIG, 2);
+AO_Ship-&gt;postFIFO(&amp;mine2_hit);
+
+// go straight to 'disabled' and let the Ship do the exploding</action>
+              </choice>
+            </tran>
+            <tran trig="MISSILE_IMG">
+              <action>uint8_t x = (uint8_t)((ObjectImageEvt const *)e)-&gt;x;
+uint8_t y = (uint8_t)((ObjectImageEvt const *)e)-&gt;y;
+uint8_t bmp = (uint8_t)((ObjectImageEvt const *)e)-&gt;bmp;</action>
+              <choice guard="do_bitmaps_overlap(MINE2_MISSILE_BMP,&#10;me-&gt;m_x, me-&gt;m_y, bmp, x, y)" target="../../../2">
+                <action>// test for incoming Missile hitting this mine
+// NOTE: Mine type-2 is nastier than Mine type-1.
+// The type-2 mine can hit the Ship with any of its
+// &quot;tentacles&quot;. However, it can be destroyed by the
+// Missile only by hitting its center, defined as
+// a smaller bitmap MINE2_MISSILE_BMP.
+
+// Score event with the score for destroying Mine2
+static ScoreEvt const mine2_destroyed(DESTROYED_MINE_SIG, 45);
+AO_Missile-&gt;postFIFO(&amp;mine2_destroyed);</action>
+              </choice>
+            </tran>
+          </state>
+          <state name="exploding">
+            <entry>me-&gt;m_exp_ctr = 0;</entry>
+            <exit/>
+            <tran trig="TIME_TICK">
+              <choice guard="(me-&gt;m_x &gt;= GAME_SPEED_X) &amp;&amp; (me-&gt;m_exp_ctr &lt; 15)">
+                <action>ObjectImageEvt *oie;
+
+++me-&gt;m_exp_ctr; // advance the explosion counter
+me-&gt;m_x -= GAME_SPEED_X; // move explosion by 1 step
+
+// tell the Game to render the current stage of Explosion
+oie = Q_NEW(ObjectImageEvt, EXPLOSION_SIG);
+oie-&gt;x   = me-&gt;m_x + 1; // x of explosion
+oie-&gt;y   = (int8_t)((int)me-&gt;m_y - 4 + 2); // y of explosion
+oie-&gt;bmp = EXPLOSION0_BMP + (me-&gt;m_exp_ctr &gt;&gt; 2);
+AO_Tunnel-&gt;postFIFO(oie);</action>
+              </choice>
+              <choice guard="else" target="../../../../1">
+                <action/>
+              </choice>
+            </tran>
+          </state>
+        </state>
+        <state_diagram size="53,67">
+          <state_glyph ref="1" node="3,4,29,8"/>
+          <state_glyph ref="2" node="3,14,38,51">
+            <text box="2,2,5,2"/>
+          </state_glyph>
+          <state_glyph ref="2/1" node="5,23,31,24"/>
+          <state_glyph ref="2/2" node="5,49,31,14">
+            <text box="1,2,5,2"/>
+          </state_glyph>
+          <initial_glyph ref="0" conn="3,2,5,1,31,4,-2">
+            <text box="0,-2,6,2"/>
+          </initial_glyph>
+          <tran_glyph ref="1/0" conn="3,10,3,1,40,15,-7">
+            <text box="0,-2,10,2"/>
+          </tran_glyph>
+          <tran_glyph ref="2/0" conn="3,21,3,1,42,-13,-13">
+            <text box="0,-2,11,2"/>
+          </tran_glyph>
+          <tran_glyph ref="2/1/0" conn="5,29,3,-1,10">
+            <text box="0,-2,10,2"/>
+          </tran_glyph>
+          <choice_glyph ref="2/1/0/1" conn="15,29,4,1,4,32,-25,-15">
+            <text box="1,4,6,2"/>
+          </choice_glyph>
+          <tran_glyph ref="2/1/1" conn="5,36,3,-1,10">
+            <text box="0,-2,8,2"/>
+          </tran_glyph>
+          <tran_glyph ref="2/1/2" conn="5,42,3,-1,10">
+            <text box="0,-2,11,2"/>
+          </tran_glyph>
+          <choice_glyph ref="2/1/2/0" conn="15,42,5,1,23,9,-2">
+            <text box="1,0,27,4"/>
+          </choice_glyph>
+          <tran_glyph ref="2/2/0" conn="5,56,3,-1,10">
+            <text box="0,-2,9,2"/>
+          </tran_glyph>
+          <choice_glyph ref="2/2/0/1" conn="15,56,4,1,5,36,-53,-19">
+            <text box="1,5,6,2"/>
+          </choice_glyph>
+          <choice_glyph ref="2/1/0/0" conn="15,29,5,-1,19">
+            <text box="1,0,20,2"/>
+          </choice_glyph>
+          <choice_glyph ref="2/2/0/0" conn="15,56,5,-1,19">
+            <text box="1,0,21,4"/>
+          </choice_glyph>
+          <choice_glyph ref="2/1/1/0" conn="15,36,5,1,34,-28,-17">
+            <text box="1,0,23,4"/>
+          </choice_glyph>
+        </state_diagram>
+      </statechart>
+    </class>
+    <attribute name="AO_Tunnel" type="QActive * const" visibility="0x00" properties="0x00"/>
+    <attribute name="AO_Ship" type="QActive * const" visibility="0x00" properties="0x00"/>
+    <attribute name="AO_Missile" type="QActive * const" visibility="0x00" properties="0x00"/>
+    <operation name="do_bitmaps_overlap" type="uint8_t" visibility="0x00" properties="0x00">
+      <parameter name="bmp_id1" type="uint8_t"/>
+      <parameter name="x1" type="uint8_t"/>
+      <parameter name="y1" type="uint8_t"/>
+      <parameter name="bmp_id2" type="uint8_t"/>
+      <parameter name="x2" type="uint8_t"/>
+      <parameter name="y2" type="uint8_t"/>
+    </operation>
+  </package>
+  <filesystem path=".">
+    <directory name="qm_code">
+      <file name="game.h">
+        <text>#ifndef game_h
+#define game_h
+
+enum GameSignals {                                 // signals used in the game
+    TIME_TICK_SIG = Q_USER_SIG,                     // published from tick ISR
+    PLAYER_TRIGGER_SIG,    // published by Player (ISR) to trigger the Missile
+    PLAYER_QUIT_SIG,             // published by Player (ISR) to quit the game
+    GAME_OVER_SIG,             // published by Ship when it finishes exploding
+
+    // insert other published signals here ...
+    MAX_PUB_SIG,                                  // the last published signal
+
+    PLAYER_SHIP_MOVE_SIG,     // posted by Player (ISR) to the Ship to move it
+
+
+    BLINK_TIMEOUT_SIG,              // signal for Tunnel's blink timeout event
+    SCREEN_TIMEOUT_SIG,            // signal for Tunnel's screen timeout event
+
+    TAKE_OFF_SIG,       // from Tunnel to Ship to grant permission to take off
+    HIT_WALL_SIG,               // from Tunnel to Ship when Ship hits the wall
+    HIT_MINE_SIG,        // from Mine to Ship or Missile when it hits the mine
+    SHIP_IMG_SIG,        // from Ship to the Tunnel to draw and check for hits
+    MISSILE_IMG_SIG,     // from Missile the Tunnel to draw and check for hits
+    MINE_IMG_SIG,               // sent by Mine to the Tunnel to draw the mine
+    MISSILE_FIRE_SIG,                   // sent by Ship to the Missile to fire
+    DESTROYED_MINE_SIG,    // from Missile to Ship when Missile destroyed Mine
+    EXPLOSION_SIG,        // from any exploding object to render the explosion
+    MINE_PLANT_SIG,                     // from Tunnel to the Mine to plant it
+    MINE_DISABLED_SIG,         // from Mine to Tunnel when it becomes disabled
+    MINE_RECYCLE_SIG,            // sent by Tunnel to Mine to recycle the mine
+    SCORE_SIG,      // from Ship to Tunnel to adjust game level based on score
+
+    MAX_SIG                              // the last signal (keep always last)
+};
+
+$declare(Events::ObjectPosEvt)
+$declare(Events::ObjectImageEvt)
+$declare(Events::MineEvt)
+$declare(Events::ScoreEvt)
+
+#define GAME_SCREEN_WIDTH          BSP_SCREEN_WIDTH
+#define GAME_SCREEN_HEIGHT         BSP_SCREEN_HEIGHT
+#define GAME_MINES_MAX             5
+#define GAME_MINES_DIST_MIN        10
+#define GAME_SPEED_X               1
+#define GAME_MISSILE_SPEED_X       2
+#define GAME_SHIP_X                10
+#define GAME_SHIP_Y                (GAME_SCREEN_HEIGHT / 2)
+
+enum GameBitmapIds {
+    PRESS_BUTTON_BMP,
+    SHIP_BMP,
+    MISSILE_BMP,
+    MINE1_BMP,
+    MINE2_BMP,
+    MINE2_MISSILE_BMP,
+    EXPLOSION0_BMP,
+    EXPLOSION1_BMP,
+    EXPLOSION2_BMP,
+    EXPLOSION3_BMP,
+    MAX_BMP
+};
+
+// opaque pointers to active objects in the application
+$declare(AOs::AO_Tunnel)
+$declare(AOs::AO_Ship)
+$declare(AOs::AO_Missile)
+
+// obtain instances of the Mines orthogonal components
+QHsm *Mine1_getInst(uint8_t id);
+QHsm *Mine2_getInst(uint8_t id);
+
+// helper function for all AOs
+$declare(AOs::do_bitmaps_overlap)
+
+#endif // game_h
+</text>
+      </file>
+      <file name="missile.cpp">
+        <text>#include &quot;qp_port.h&quot;
+#include &quot;bsp.h&quot;
+#include &quot;game.h&quot;
+
+//Q_DEFINE_THIS_FILE
+
+// encapsulated delcaration of the Missile active object ---------------------
+$declare(AOs::Missile)
+
+// local objects -------------------------------------------------------------
+static Missile l_missile;    // the sole instance of the Missile active object
+
+// Public-scope objects ------------------------------------------------------
+QActive * const AO_Missile = (QActive *)&amp;l_missile;          // opaque pointer
+
+// Active object definition --------------------------------------------------
+$define(AOs::Missile)</text>
+      </file>
+      <file name="ship.cpp">
+        <text>#include &quot;qp_port.h&quot;
+#include &quot;bsp.h&quot;
+#include &quot;game.h&quot;
+
+/* Q_DEFINE_THIS_FILE */
+
+#define SHIP_WIDTH  5
+#define SHIP_HEIGHT 3
+
+// encapsulated delcaration of the Ship active object ------------------------
+$declare(AOs::Ship)
+
+// local objects -------------------------------------------------------------
+static Ship l_ship;             // the sole instance of the Ship active object
+
+// Public-scope objects ------------------------------------------------------
+QActive * const AO_Ship = (QActive *)&amp;l_ship;                // opaque pointer
+
+// Active object definition --------------------------------------------------
+$define(AOs::Ship)</text>
+      </file>
+      <file name="tunnel.cpp">
+        <text>#include &quot;qp_port.h&quot;
+#include &quot;bsp.h&quot;
+#include &quot;game.h&quot;
+#include &lt;string.h&gt;                              // for memmove() and memcpy()
+
+Q_DEFINE_THIS_FILE
+
+// encapsulated delcaration of the Tunnel active object ----------------------
+$declare(AOs::Tunnel)
+
+// local objects -------------------------------------------------------------
+static Tunnel l_tunnel;       // the sole instance of the Tunnel active object
+
+static uint32_t l_rnd;                                          // random seed
+static uint8_t l_walls[GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT/8];
+static uint8_t l_frame[GAME_SCREEN_WIDTH * GAME_SCREEN_HEIGHT/8];
+
+// local helper functions ----------------------------------------------------
+static void randomSeed(uint32_t seed);
+static uint32_t random(void);
+
+// Public-scope objects ------------------------------------------------------
+QActive * const AO_Tunnel = (QActive *)&amp;l_tunnel;            // opaque pointer
+
+// helper functions ----------------------------------------------------------
+//
+// The bitmap for the &quot;Press Button&quot; text:
+//
+//     xxx.........................xxx........x...x...........
+//     x..x........................x..x.......x...x...........
+//     x..x.x.xx..xx...xxx..xxx....x..x.x..x.xxx.xxx..xx..xxx.
+//     xxx..xx...x..x.x....x.......xxx..x..x..x...x..x..x.x..x
+//     x....x....xxxx..xx...xx.....x..x.x..x..x...x..x..x.x..x
+//     x....x....x.......x....x....x..x.x..x..x...x..x..x.x..x
+//     x....x.....xxx.xxx..xxx.....xxx...xxx...x...x..xx..x..x
+//     .......................................................
+///
+static uint8_t const press_button_bits[] = {
+    0x7F, 0x09, 0x09, 0x06, 0x00, 0x7C, 0x08, 0x04, 0x04, 0x00,
+    0x38, 0x54, 0x54, 0x58, 0x00, 0x48, 0x54, 0x54, 0x24, 0x00,
+    0x48, 0x54, 0x54, 0x24, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x49,
+    0x49, 0x36, 0x00, 0x3C, 0x40, 0x40, 0x7C, 0x00, 0x04, 0x3F,
+    0x44, 0x00, 0x04, 0x3F, 0x44, 0x00, 0x38, 0x44, 0x44, 0x38,
+    0x00, 0x7C, 0x04, 0x04, 0x78
+};
+
+// bitmap of the Ship:
+//
+//     x....
+//     xxx..
+//     xxxxx
+///
+static uint8_t const ship_bits[] = {
+    0x07, 0x06, 0x06, 0x04, 0x04
+};
+
+// bitmap of the Missile:
+//
+//     xxx
+///
+static uint8_t const missile_bits[] = {
+    0x01, 0x01, 0x01
+};
+
+// bitmap of the Mine type-1:
+//
+//     .x.
+//     xxx
+//     .x.
+///
+static uint8_t const mine1_bits[] = {
+    0x02, 0x07, 0x02
+};
+
+// bitmap of the Mine type-2:
+//
+//     x..x
+//     .xx.
+//     .xx.
+//     x..x
+///
+static uint8_t const mine2_bits[] = {
+    0x09, 0x06, 0x06, 0x09
+};
+
+// Mine type-2 is nastier than Mine type-1. The type-2 mine can
+// hit the Ship with any of its &quot;tentacles&quot;. However, it can be
+// destroyed by the Missile only by hitting its center, defined as
+// the following bitmap:
+//
+//     ....
+//     .xx.
+//     .xx.
+//     ....
+///
+static uint8_t const mine2_missile_bits[] = {
+    0x00, 0x06, 0x06, 0x00
+};
+
+// The bitmap of the explosion stage 0:
+//
+//     .......
+//     .......
+//     ...x...
+//     ..x.x..
+//     ...x...
+//     .......
+//     .......
+///
+static uint8_t const explosion0_bits[] = {
+    0x00, 0x00, 0x08, 0x14, 0x08, 0x00, 0x00
+};
+
+// The bitmap of the explosion stage 1:
+//
+//     .......
+//     .......
+//     ..x.x..
+//     ...x...
+//     ..x.x..
+//     .......
+//     .......
+///
+static uint8_t const explosion1_bits[] = {
+    0x00, 0x00, 0x14, 0x08, 0x14, 0x00, 0x00
+};
+
+// The bitmap of the explosion stage 2:
+//
+//     .......
+//     .x...x.
+//     ..x.x..
+//     ...x...
+//     ..x.x..
+//     .x...x.
+//     .......
+///
+static uint8_t const explosion2_bits[] = {
+    0x00, 0x22, 0x14, 0x08, 0x14, 0x22, 0x00
+};
+
+// The bitmap of the explosion stage 3:
+//
+//     x..x..x
+//     .x.x.x.
+//     ..x.x..
+//     xx.x.xx
+//     ..x.x..
+//     .x.x.x.
+//     x..x..x
+///
+static uint8_t const explosion3_bits[] = {
+    0x49, 0x2A, 0x14, 0x6B, 0x14, 0x2A, 0x49
+};
+
+struct Bitmap {               // the auxiliary structure to hold const bitmaps
+    uint8_t const *bits;                             // the bits in the bitmap
+    uint8_t width;                                  // the width of the bitmap
+};
+
+static Bitmap const l_bitmap[MAX_BMP] = {
+    { press_button_bits,  Q_DIM(press_button_bits)  },
+    { ship_bits,          Q_DIM(ship_bits)          },
+    { missile_bits,       Q_DIM(missile_bits)       },
+    { mine1_bits,         Q_DIM(mine1_bits)         },
+    { mine2_bits,         Q_DIM(mine2_bits)         },
+    { mine2_missile_bits, Q_DIM(mine2_missile_bits) },
+    { explosion0_bits,    Q_DIM(explosion0_bits)    },
+    { explosion1_bits,    Q_DIM(explosion1_bits)    },
+    { explosion2_bits,    Q_DIM(explosion2_bits)    },
+    { explosion3_bits,    Q_DIM(explosion3_bits)    }
+};
+
+// Active object definition --------------------------------------------------
+$define(AOs::Tunnel)
+
+//............................................................................
+uint32_t random(void) {         // a very cheap pseudo-random-number generator
+    // &quot;Super-Duper&quot; Linear Congruential Generator (LCG)
+    // LCG(2^32, 3*7*11*13*23, 0, seed)
+    l_rnd = l_rnd * (3*7*11*13*23);
+    return l_rnd &gt;&gt; 8;
+}
+//............................................................................
+void randomSeed(uint32_t seed) {
+    l_rnd = seed;
+}
+//............................................................................
+uint8_t do_bitmaps_overlap(uint8_t bmp_id1, uint8_t x1, uint8_t y1,
+                           uint8_t bmp_id2, uint8_t x2, uint8_t y2)
+{
+    uint8_t x;
+    uint8_t x0;
+    uint8_t w;
+    uint32_t bits1;
+    uint32_t bits2;
+    Bitmap const *bmp1;
+    Bitmap const *bmp2;
+
+    Q_REQUIRE((bmp_id1 &lt; Q_DIM(l_bitmap)) &amp;&amp; (bmp_id2 &lt; Q_DIM(l_bitmap)));
+
+    bmp1 = &amp;l_bitmap[bmp_id1];
+    bmp2 = &amp;l_bitmap[bmp_id2];
+
+                // is the incoming object starting to overlap the Mine bitmap?
+    if ((x1 &lt;= x2) &amp;&amp; (x1 + bmp2-&gt;width &gt; x2)) {
+        x0 = x2 - x1;
+        w  = x1 + bmp2-&gt;width - x2;
+        if (w &gt; bmp1-&gt;width) {
+            w = bmp1-&gt;width;
+        }
+        for (x = 0; x &lt; w; ++x) {         // scan over the overlapping columns
+            bits1 = ((uint32_t)bmp2-&gt;bits[x + x0] &lt;&lt; y2);
+            bits2 = ((uint32_t)bmp1-&gt;bits[x] &lt;&lt; y1);
+            if ((bits1 &amp; bits2) != 0) {                // do the bits overlap?
+                return (uint8_t)1;                                     // yes!
+            }
+        }
+    }
+    else {
+        if ((x1 &gt; x2) &amp;&amp; (x2 + bmp1-&gt;width &gt; x1)) {
+            x0 = x1 - x2;
+            w  = x2 + bmp1-&gt;width - x1;
+            if (w &gt; bmp2-&gt;width) {
+                w = bmp2-&gt;width;
+            }
+            for (x = 0; x &lt; w; ++x) {     // scan over the overlapping columns
+                bits1 = ((uint32_t)bmp1-&gt;bits[x + x0] &lt;&lt; y1);
+                bits2 = ((uint32_t)bmp2-&gt;bits[x] &lt;&lt; y2);
+                if ((bits1 &amp; bits2) != 0) {            // do the bits overlap?
+                    return (uint8_t)1;                                 // yes!
+                }
+            }
+        }
+    }
+    return (uint8_t)0;                           // the bitmaps do not overlap
+}</text>
+      </file>
+      <file name="mine1.cpp">
+        <text>#include &quot;qp_port.h&quot;
+#include &quot;bsp.h&quot;
+#include &quot;game.h&quot;
+
+Q_DEFINE_THIS_FILE
+
+// encapsulated delcaration of the Mine1 HSM ---------------------------------
+$declare(AOs::Mine1)
+
+// local objects -------------------------------------------------------------
+static Mine1 l_mine1[GAME_MINES_MAX];                // a pool of type-1 mines
+
+                                // helper macro to provide the ID of this mine
+#define MINE_ID(me_)    ((me_) - l_mine1)
+
+//............................................................................
+QHsm *Mine1_getInst(uint8_t id) {
+    Q_REQUIRE(id &lt; GAME_MINES_MAX);
+    return &amp;l_mine1[id];
+}
+// Mine1 class definition ----------------------------------------------------
+$define(AOs::Mine1)</text>
+      </file>
+      <file name="mine2.cpp">
+        <text>#include &quot;qp_port.h&quot;
+#include &quot;bsp.h&quot;
+#include &quot;game.h&quot;
+
+Q_DEFINE_THIS_FILE
+
+// encapsulated delcaration of the Mine2 HSM ---------------------------------
+$declare(AOs::Mine2)
+
+// local objects -------------------------------------------------------------
+static Mine2 l_mine2[GAME_MINES_MAX];                // a pool of type-2 mines
+
+                                // helper macro to provide the ID of this mine
+#define MINE_ID(me_)    ((me_) - l_mine2)
+
+//............................................................................
+QHsm *Mine2_getInst(uint8_t id) {
+    Q_REQUIRE(id &lt; GAME_MINES_MAX);
+    return &amp;l_mine2[id];
+}
+// Mine2 class definition ----------------------------------------------------
+$define(AOs::Mine2)</text>
+      </file>
+    </directory>
+  </filesystem>
+</model>

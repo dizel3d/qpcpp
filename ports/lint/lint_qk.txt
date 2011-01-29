@@ -1,0 +1,402 @@
+
+--- Module:   ..\..\qk\source\qk.cpp (C++)
+                       _
+#... this_file[] = "qk"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qk)
+..\..\qk\source\qk.cpp  31  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                 _
+    QPSet64 volatile QK_readySet_;                          // ready set of QK
+..\..\qk\source\qk.cpp  43  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                                            _
+uint8_t volatile QK_currPrio_ = (uint8_t)(QF_MAX_ACTIVE + 1);
+..\..\qk\source\qk.cpp  46  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                            _
+uint8_t volatile QK_intNest_;                 // start with nesting level of 0
+..\..\qk\source\qk.cpp  47  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                                  _
+char const Q_ROM * Q_ROM_VAR QK::getVersion(void) {
+..\..\qk\source\qk.cpp  52  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                          _
+        ((QP_VERSION >> 12) & 0xF) + '0',
+..\..\qk\source\qk.cpp  54  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qk\source\qk.cpp  54  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qk\source\qk.cpp  54  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qk\source\qk.cpp  54  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qk\source\qk.cpp  54  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                          _
+        ((QP_VERSION >>  8) & 0xF) + '0',
+..\..\qk\source\qk.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qk\source\qk.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qk\source\qk.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qk\source\qk.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qk\source\qk.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                          _
+        ((QP_VERSION >>  4) & 0xF) + '0',
+..\..\qk\source\qk.cpp  58  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qk\source\qk.cpp  58  Info 778: Constant expression evaluates to 0 in
+    operation '&'
+..\..\qk\source\qk.cpp  58  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qk\source\qk.cpp  58  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qk\source\qk.cpp  58  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qk\source\qk.cpp  58  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                                 _
+        (QP_VERSION         & 0xF) + '0',
+..\..\qk\source\qk.cpp  59  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qk\source\qk.cpp  59  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qk\source\qk.cpp  59  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qk\source\qk.cpp  59  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                    _
+void QF::init(void) {
+..\..\qk\source\qk.cpp  65  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                    _
+void QF::stop(void) {
+..\..\qk\source\qk.cpp  69  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                   _
+void QF::run(void) {
+..\..\qk\source\qk.cpp  74  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+_
+{
+..\..\qk\source\qk.cpp  93  Note 1960: Violates MISRA C++ 2008 Required Rule
+    8-4-2, function parameter list differs from prior declaration
+..\..\qk\source\qk.cpp  93  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                                                     _
+#... 60 */if (((uint8_t)0 < prio) && (prio <= (uint8_t)63)) { } else (Q_onAsser
+#...            Q_ASSERT(((uint8_t)0 < prio) && (prio <= (uint8_t)63))
+    Q_REQUIRE(((uint8_t)0 < prio) && (prio <= (uint8_t)QF_MAX_ACTIVE));
+..\..\qk\source\qk.cpp  94  Note 1960: Violates MISRA C++ 2008 Required Rule
+    6-4-1, left brace expected for if and else
+                                                                     _
+#... prio <= (uint8_t)63)) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint 
+#...            Q_ASSERT(((uint8_t)0 < prio) && (prio <= (uint8_t)63))
+    Q_REQUIRE(((uint8_t)0 < prio) && (prio <= (uint8_t)QF_MAX_ACTIVE));
+..\..\qk\source\qk.cpp  94  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-2-12, Array type passed to function expecting a pointer
+                                          _
+#if defined(QK_TLS) || defined(QK_EXT_SAVE)
+..\..\qk\source\qk.cpp  100  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-3-1, boolean expression required for operator: '||'; the -strong(B,...)
+    option can help provide Boolean-by-enforcement
+..\..\qk\source\qk.cpp  100  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-3-1, boolean expression required for operator: '||'; the -strong(B,...)
+    option can help provide Boolean-by-enforcement
+_
+}
+..\..\qk\source\qk.cpp  110  Note 952: Parameter 'prio' (line 89) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qk\source\qk.cpp  89  Info 830: Location cited in prior message
+_
+}
+..\..\qk\source\qk.cpp  110  Note 952: Parameter 'flags' (line 91) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qk\source\qk.cpp  91  Info 830: Location cited in prior message
+_
+}
+..\..\qk\source\qk.cpp  110  Note 952: Parameter 'ie' (line 92) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qk\source\qk.cpp  92  Info 830: Location cited in prior message
+                         _
+void QActive::stop(void) {
+..\..\qk\source\qk.cpp  112  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+_
+}
+..\..\qk\source\qk.cpp  114  Info 1762: Member function 'QActive::stop(void)'
+    could be made const [MISRA C++ Rule 9-3-3]
+
+--- Module:   ..\..\qk\source\qk_ext.cpp (C++)
+                           _
+#... this_file[] = "qk_ext"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qk_ext)
+..\..\qk\source\qk_ext.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                  _
+void QK_scheduleExt_(QF_INT_KEY_TYPE intLockKey_) {
+..\..\qk\source\qk_ext.cpp  42  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 8-4-2, function parameter list differs from prior declaration
+..\..\qk\source\qk_ext.cpp  42  Info 1784: Symbol 'QK_scheduleExt_(int)'
+    previously declared as "C", compare with line 302, file ..\..\include\qk.h
+..\..\include\qk.h  302  Info 830: Location cited in prior message
+                                                  _
+void QK_scheduleExt_(QF_INT_KEY_TYPE intLockKey_) {
+..\..\qk\source\qk_ext.cpp  42  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                       _
+#... _intNest_ == (uint8_t)0) { } else (Q_onAssert(l_this_file, __LINE__)) /*li
+#... Q_ASSERT(QK_intNest_ == (uint8_t)0)
+    Q_REQUIRE(QK_intNest_ == (uint8_t)0);
+..\..\qk\source\qk_ext.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                       _
+#...  (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... Q_ASSERT(QK_intNest_ == (uint8_t)0)
+    Q_REQUIRE(QK_intNest_ == (uint8_t)0);
+..\..\qk\source\qk_ext.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                   _
+    if ((p > QK_currPrio_) && (p > QK_ceilingPrio_)) {
+..\..\qk\source\qk_ext.cpp  53  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-14-1, side effects on right hand of logical operator: '&&'
+                        _
+#... r = (struct _reent *)(a)->m_thread /*lint -restore */
+                QK_TLS(a);                  // switch new thread-local storage
+..\..\qk\source\qk_ext.cpp  73  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 17-0-2, Re-use of C++ reserved identifier, '_reent'
+                                                          _
+#... 12 */if (((QS::glbFilter_[(uint8_t)(QS_QK_SCHEDULE) >> 3U] & (1U << ((uint
+            QS_BEGIN_NOLOCK_(QS_QK_SCHEDULE, QS::aoObj_, a)
+..\..\qk\source\qk_ext.cpp  77  Note 930: cast from enum to unsigned char
+                                                          _
+#... SCHEDULE) >> 3U] & (1U << ((uint8_t)(QS_QK_SCHEDULE) & 7U))) != 0U) && (((
+            QS_BEGIN_NOLOCK_(QS_QK_SCHEDULE, QS::aoObj_, a)
+..\..\qk\source\qk_ext.cpp  77  Note 930: cast from enum to unsigned char
+                                                          _
+#... LE) >> 3U] & (1U << ((uint8_t)(QS_QK_SCHEDULE) & 7U))) != 0U) && (((QS::ao
+            QS_BEGIN_NOLOCK_(QS_QK_SCHEDULE, QS::aoObj_, a)
+..\..\qk\source\qk_ext.cpp  77  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-10, Operators '~' and '<<' require recasting to underlying type
+    for sub-integers
+                                                          _
+#... Obj_) == (a)))) { QS::begin((uint8_t)(QS_QK_SCHEDULE)); /*lint -restore */
+            QS_BEGIN_NOLOCK_(QS_QK_SCHEDULE, QS::aoObj_, a)
+..\..\qk\source\qk_ext.cpp  77  Note 930: cast from enum to unsigned char
+                                                   _
+        } while ((p > pin) && (p > QK_ceilingPrio_));
+..\..\qk\source\qk_ext.cpp  96  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-14-1, side effects on right hand of logical operator: '&&'
+                                             _
+#if defined(QK_TLS) || defined(QK_EXT_RESTORE)
+..\..\qk\source\qk_ext.cpp  100  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-3-1, boolean expression required for operator: '||'; the
+    -strong(B,...) option can help provide Boolean-by-enforcement
+..\..\qk\source\qk_ext.cpp  100  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-3-1, boolean expression required for operator: '||'; the
+    -strong(B,...) option can help provide Boolean-by-enforcement
+                    _
+#... (struct _reent *)(a)->m_thread /*lint -restore */
+            QK_TLS(a);                             // restore the original TLS
+..\..\qk\source\qk_ext.cpp  104  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 17-0-2, Re-use of C++ reserved identifier, '_reent'
+
+--- Module:   ..\..\qk\source\qk_mutex.cpp (C++)
+                                _
+uint8_t volatile QK_ceilingPrio_;               // ceiling priority of a mutex
+..\..\qk\source\qk_mutex.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                          _
+QMutex QK::mutexLock(uint8_t prioCeiling) {
+..\..\qk\source\qk_mutex.cpp  44  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                           _
+#... 2 */if (((QS::glbFilter_[(uint8_t)(QS_QK_MUTEX_LOCK) >> 3U] & (1U << ((uin
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_LOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  52  Note 930: cast from enum to unsigned char
+                                                           _
+#... EX_LOCK) >> 3U] & (1U << ((uint8_t)(QS_QK_MUTEX_LOCK) & 7U))) != 0U) && ((
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_LOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  52  Note 930: cast from enum to unsigned char
+                                                           _
+#... K) >> 3U] & (1U << ((uint8_t)(QS_QK_MUTEX_LOCK) & 7U))) != 0U) && ((((void
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_LOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  52  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-10, Operators '~' and '<<' require recasting to underlying type
+    for sub-integers
+                                                           _
+#... id *)0) == (void *)0) || (((void *)0) == ((void *)0)))) { QS::begin((uint8
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_LOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  52  Note 948: Operator '==' always evaluates to
+    True [Reference: file ..\..\qk\source\qk_mutex.cpp: line 52] [MISRA C++
+    Rule 0-1-9]
+..\..\qk\source\qk_mutex.cpp  52  Info 831: Reference cited in prior message
+                                                           _
+#... id *)0) == (void *)0) || (((void *)0) == ((void *)0)))) { QS::begin((uint8
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_LOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  52  Note 944: Left argument for operator '||'
+    always evaluates to True [Reference: file ..\..\qk\source\qk_mutex.cpp:
+    line 52] [MISRA C++ Rule 0-1-1, 0-1-2, 0-1-9], [MISRA C++ Rule 0-1-1,
+    0-1-2, 0-1-9], [MISRA C++ Rule 0-1-1, 0-1-2, 0-1-9]
+..\..\qk\source\qk_mutex.cpp  52  Info 831: Reference cited in prior message
+                                                           _
+#... id *)0) == (void *)0) || (((void *)0) == ((void *)0)))) { QS::begin((uint8
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_LOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  52  Note 944: Right argument for operator '&&'
+    always evaluates to True [Reference: file ..\..\qk\source\qk_mutex.cpp:
+    line 52] [MISRA C++ Rule 0-1-1, 0-1-2, 0-1-9], [MISRA C++ Rule 0-1-1,
+    0-1-2, 0-1-9], [MISRA C++ Rule 0-1-1, 0-1-2, 0-1-9]
+..\..\qk\source\qk_mutex.cpp  52  Info 831: Reference cited in prior message
+                                                           _
+#... ((void *)0)))) { QS::begin((uint8_t)(QS_QK_MUTEX_LOCK)); /*lint -restore *
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_LOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  52  Note 930: cast from enum to unsigned char
+_
+}
+..\..\qk\source\qk_mutex.cpp  60  Note 952: Parameter 'prioCeiling' (line 44)
+    could be declared const [MISRA C++ Rule 7-1-1]
+..\..\qk\source\qk_mutex.cpp  44  Info 830: Location cited in prior message
+                                   _
+void QK::mutexUnlock(QMutex mutex) {
+..\..\qk\source\qk_mutex.cpp  62  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                             _
+#... 2 */if (((QS::glbFilter_[(uint8_t)(QS_QK_MUTEX_UNLOCK) >> 3U] & (1U << ((u
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_UNLOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  66  Note 930: cast from enum to unsigned char
+                                                             _
+#... _UNLOCK) >> 3U] & (1U << ((uint8_t)(QS_QK_MUTEX_UNLOCK) & 7U))) != 0U) && 
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_UNLOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  66  Note 930: cast from enum to unsigned char
+                                                             _
+#... K) >> 3U] & (1U << ((uint8_t)(QS_QK_MUTEX_UNLOCK) & 7U))) != 0U) && ((((vo
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_UNLOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  66  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-10, Operators '~' and '<<' require recasting to underlying type
+    for sub-integers
+                                                             _
+#... void *)0) == (void *)0) || (((void *)0) == ((void *)0)))) { QS::begin((uin
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_UNLOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  66  Note 948: Operator '==' always evaluates to
+    True [Reference: file ..\..\qk\source\qk_mutex.cpp: line 66] [MISRA C++
+    Rule 0-1-9]
+..\..\qk\source\qk_mutex.cpp  66  Info 831: Reference cited in prior message
+                                                             _
+#... void *)0) == (void *)0) || (((void *)0) == ((void *)0)))) { QS::begin((uin
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_UNLOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  66  Note 944: Left argument for operator '||'
+    always evaluates to True [Reference: file ..\..\qk\source\qk_mutex.cpp:
+    line 66] [MISRA C++ Rule 0-1-1, 0-1-2, 0-1-9], [MISRA C++ Rule 0-1-1,
+    0-1-2, 0-1-9], [MISRA C++ Rule 0-1-1, 0-1-2, 0-1-9]
+..\..\qk\source\qk_mutex.cpp  66  Info 831: Reference cited in prior message
+                                                             _
+#... void *)0) == (void *)0) || (((void *)0) == ((void *)0)))) { QS::begin((uin
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_UNLOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  66  Note 944: Right argument for operator '&&'
+    always evaluates to True [Reference: file ..\..\qk\source\qk_mutex.cpp:
+    line 66] [MISRA C++ Rule 0-1-1, 0-1-2, 0-1-9], [MISRA C++ Rule 0-1-1,
+    0-1-2, 0-1-9], [MISRA C++ Rule 0-1-1, 0-1-2, 0-1-9]
+..\..\qk\source\qk_mutex.cpp  66  Info 831: Reference cited in prior message
+                                                             _
+#... ((void *)0)))) { QS::begin((uint8_t)(QS_QK_MUTEX_UNLOCK)); /*lint -restore
+    QS_BEGIN_NOLOCK_(QS_QK_MUTEX_UNLOCK, (void *)0, (void *)0)
+..\..\qk\source\qk_mutex.cpp  66  Note 930: cast from enum to unsigned char
+
+--- Module:   ..\..\qk\source\qk_sched.cpp (C++)
+                             _
+#... this_file[] = "qk_sched"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qk_sched)
+..\..\qk\source\qk_sched.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                               _
+void QK_schedule_(QF_INT_KEY_TYPE intLockKey_) {
+..\..\qk\source\qk_sched.cpp  42  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 8-4-2, function parameter list differs from prior declaration
+..\..\qk\source\qk_sched.cpp  42  Info 1784: Symbol 'QK_schedule_(int)'
+    previously declared as "C", compare with line 287, file ..\..\include\qk.h
+..\..\include\qk.h  287  Info 830: Location cited in prior message
+                                               _
+void QK_schedule_(QF_INT_KEY_TYPE intLockKey_) {
+..\..\qk\source\qk_sched.cpp  42  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                       _
+#... _intNest_ == (uint8_t)0) { } else (Q_onAssert(l_this_file, __LINE__)) /*li
+#... Q_ASSERT(QK_intNest_ == (uint8_t)0)
+    Q_REQUIRE(QK_intNest_ == (uint8_t)0);
+..\..\qk\source\qk_sched.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                       _
+#...  (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... Q_ASSERT(QK_intNest_ == (uint8_t)0)
+    Q_REQUIRE(QK_intNest_ == (uint8_t)0);
+..\..\qk\source\qk_sched.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                   _
+    if ((p > QK_currPrio_) && (p > QK_ceilingPrio_)) {
+..\..\qk\source\qk_sched.cpp  53  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-14-1, side effects on right hand of logical operator: '&&'
+                        _
+#... r = (struct _reent *)(a)->m_thread /*lint -restore */
+                QK_TLS(a);                  // switch new thread-local storage
+..\..\qk\source\qk_sched.cpp  67  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 17-0-2, Re-use of C++ reserved identifier, '_reent'
+                                                          _
+#... 12 */if (((QS::glbFilter_[(uint8_t)(QS_QK_SCHEDULE) >> 3U] & (1U << ((uint
+            QS_BEGIN_NOLOCK_(QS_QK_SCHEDULE, QS::aoObj_, a)
+..\..\qk\source\qk_sched.cpp  71  Note 930: cast from enum to unsigned char
+                                                          _
+#... SCHEDULE) >> 3U] & (1U << ((uint8_t)(QS_QK_SCHEDULE) & 7U))) != 0U) && (((
+            QS_BEGIN_NOLOCK_(QS_QK_SCHEDULE, QS::aoObj_, a)
+..\..\qk\source\qk_sched.cpp  71  Note 930: cast from enum to unsigned char
+                                                          _
+#... LE) >> 3U] & (1U << ((uint8_t)(QS_QK_SCHEDULE) & 7U))) != 0U) && (((QS::ao
+            QS_BEGIN_NOLOCK_(QS_QK_SCHEDULE, QS::aoObj_, a)
+..\..\qk\source\qk_sched.cpp  71  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-10, Operators '~' and '<<' require recasting to underlying type
+    for sub-integers
+                                                          _
+#... Obj_) == (a)))) { QS::begin((uint8_t)(QS_QK_SCHEDULE)); /*lint -restore */
+            QS_BEGIN_NOLOCK_(QS_QK_SCHEDULE, QS::aoObj_, a)
+..\..\qk\source\qk_sched.cpp  71  Note 930: cast from enum to unsigned char
+                                       _
+            if (QK_readySet_.notEmpty()) {
+..\..\qk\source\qk_sched.cpp  85  Note 909: Implicit conversion from unsigned
+    char to bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                                                   _
+        } while ((p > pin) && (p > QK_ceilingPrio_));
+..\..\qk\source\qk_sched.cpp  94  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-14-1, side effects on right hand of logical operator: '&&'
+                    _
+#... (struct _reent *)(a)->m_thread /*lint -restore */
+            QK_TLS(a);                             // restore the original TLS
+..\..\qk\source\qk_sched.cpp  101  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 17-0-2, Re-use of C++ reserved identifier, '_reent'
+
+--- Additional Misra Messages:
+
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QPSet64::insert(unsigned char)
+    volatile
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QPSet64::remove(unsigned char)
+    volatile
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QPSet8::insert(unsigned char)
+    volatile
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QPSet8::remove(unsigned char)
+    volatile
+
+--- Global Wrap-up
+
+Note 974: Worst case function for stack usage: 'QK::mutexUnlock' is finite,
+    requires 80 bytes total stack in calling 'QK_schedule_'. See +stack for a
+    full report. [MISRA C++ Rule 7-5-4]

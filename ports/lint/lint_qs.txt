@@ -1,0 +1,784 @@
+
+--- Module:   ..\..\qs\source\qs.cpp (C++)
+                          _
+uint8_t QS::glbFilter_[32];                                // global QS filter
+..\..\qs\source\qs.cpp  36  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                 _
+uint8_t *QS_ring_;                  // pointer to the start of the ring buffer
+..\..\qs\source\qs.cpp  39  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+             _
+QSCtr QS_end_;                         // offset of the end of the ring buffer
+..\..\qs\source\qs.cpp  40  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+              _
+QSCtr QS_head_;                  // offset to where next byte will be inserted
+..\..\qs\source\qs.cpp  41  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+              _
+QSCtr QS_tail_;                 // offset of where next byte will be extracted
+..\..\qs\source\qs.cpp  42  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+              _
+QSCtr QS_used_;                // number of bytes currently in the ring buffer
+..\..\qs\source\qs.cpp  43  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+               _
+uint8_t QS_seq_;                                 // the record sequence number
+..\..\qs\source\qs.cpp  44  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                  _
+uint8_t QS_chksum_;                      // the checksum of the current record
+..\..\qs\source\qs.cpp  45  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                _
+uint8_t QS_full_;                       // the ring buffer is temporarily full
+..\..\qs\source\qs.cpp  46  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                                  _
+char const Q_ROM * Q_ROM_VAR QS::getVersion(void) {
+..\..\qs\source\qs.cpp  50  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                          _
+        ((QP_VERSION >> 12) & 0xF) + '0',
+..\..\qs\source\qs.cpp  52  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qs\source\qs.cpp  52  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qs\source\qs.cpp  52  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qs\source\qs.cpp  52  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qs\source\qs.cpp  52  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                          _
+        ((QP_VERSION >>  8) & 0xF) + '0',
+..\..\qs\source\qs.cpp  54  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qs\source\qs.cpp  54  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qs\source\qs.cpp  54  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qs\source\qs.cpp  54  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qs\source\qs.cpp  54  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                          _
+        ((QP_VERSION >>  4) & 0xF) + '0',
+..\..\qs\source\qs.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qs\source\qs.cpp  56  Info 778: Constant expression evaluates to 0 in
+    operation '&'
+..\..\qs\source\qs.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qs\source\qs.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qs\source\qs.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qs\source\qs.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                                 _
+        (QP_VERSION         & 0xF) + '0',
+..\..\qs\source\qs.cpp  57  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qs\source\qs.cpp  57  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qs\source\qs.cpp  57  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-6, Implicit conversion of integer to smaller type
+..\..\qs\source\qs.cpp  57  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-11, Disallowed use of non-character value in the initialization of an
+    object of a plain char type
+                                                  _
+void QS::initBuf(uint8_t sto[], uint32_t stoSize) {
+..\..\qs\source\qs.cpp  63  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+_
+}
+..\..\qs\source\qs.cpp  66  Note 952: Parameter 'stoSize' (line 63) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs.cpp  63  Info 830: Location cited in prior message
+                               _
+void QS::filterOn(uint8_t rec) {
+..\..\qs\source\qs.cpp  68  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                                           _
+        glbFilter_[rec >> 3] |= (uint8_t)(1U << (rec & 0x07));
+..\..\qs\source\qs.cpp  76  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qs\source\qs.cpp  76  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+_
+}
+..\..\qs\source\qs.cpp  78  Note 952: Parameter 'rec' (line 68) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs.cpp  68  Info 830: Location cited in prior message
+                                _
+void QS::filterOff(uint8_t rec) {
+..\..\qs\source\qs.cpp  80  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                                             _
+        glbFilter_[rec >> 3] &= (uint8_t)(~(1U << (rec & 0x07)));
+..\..\qs\source\qs.cpp  88  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qs\source\qs.cpp  88  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+..\..\qs\source\qs.cpp  88  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-10, Operators '~' and '<<' require recasting to underlying type for
+    sub-integers
+_
+}
+..\..\qs\source\qs.cpp  90  Note 952: Parameter 'rec' (line 80) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs.cpp  80  Info 830: Location cited in prior message
+                            _
+void QS::begin(uint8_t rec) {
+..\..\qs\source\qs.cpp  92  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                              _
+#... uint8_t)((QS_seq_) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_hea
+#... )((QS_seq_) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(QS_seq_) }
+    QS_INSERT_ESC_BYTE(QS_seq_)                   // store the sequence number
+..\..\qs\source\qs.cpp  95  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                              _
+#... uint8_t)((QS_seq_) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_hea
+#... )((QS_seq_) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(QS_seq_) }
+    QS_INSERT_ESC_BYTE(QS_seq_)                   // store the sequence number
+..\..\qs\source\qs.cpp  95  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                          _
+#... uint8_t)((rec) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head_ =
+#... )((rec) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(rec) }
+    QS_INSERT_ESC_BYTE(rec)                             // store the record ID
+..\..\qs\source\qs.cpp  96  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                          _
+#... uint8_t)((rec) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head_ =
+#... )((rec) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(rec) }
+    QS_INSERT_ESC_BYTE(rec)                             // store the record ID
+..\..\qs\source\qs.cpp  96  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+_
+}
+..\..\qs\source\qs.cpp  97  Note 952: Parameter 'rec' (line 92) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs.cpp  92  Info 830: Location cited in prior message
+                   _
+void QS::end(void) {
+..\..\qs\source\qs.cpp  99  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                          _
+#... _t)(QS_chksum_ ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head_ =
+#... chksum_ ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(QS_chksum_) }
+    QS_INSERT_CHKSUM_BYTE()
+..\..\qs\source\qs.cpp  100  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                          _
+#... _t)(QS_chksum_ ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head_ =
+#... chksum_ ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(QS_chksum_) }
+    QS_INSERT_CHKSUM_BYTE()
+..\..\qs\source\qs.cpp  100  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                       _
+void QS::u8(uint8_t format, uint8_t d) {
+..\..\qs\source\qs.cpp  108  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                             _
+#... uint8_t)((format) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head
+#... )((format) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(format) }
+    QS_INSERT_ESC_BYTE(format)
+..\..\qs\source\qs.cpp  109  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                             _
+#... uint8_t)((format) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head
+#... )((format) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(format) }
+    QS_INSERT_ESC_BYTE(format)
+..\..\qs\source\qs.cpp  109  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                        _
+#... uint8_t)((d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head_ = (
+#... )((d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(d) }
+    QS_INSERT_ESC_BYTE(d)
+..\..\qs\source\qs.cpp  110  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                        _
+#... uint8_t)((d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head_ = (
+#... )((d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(d) }
+    QS_INSERT_ESC_BYTE(d)
+..\..\qs\source\qs.cpp  110  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+_
+}
+..\..\qs\source\qs.cpp  111  Note 952: Parameter 'format' (line 108) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs.cpp  108  Info 830: Location cited in prior message
+_
+}
+..\..\qs\source\qs.cpp  111  Note 952: Parameter 'd' (line 108) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs.cpp  108  Info 830: Location cited in prior message
+                                         _
+void QS::u16(uint8_t format, uint16_t d) {
+..\..\qs\source\qs.cpp  113  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                             _
+#... uint8_t)((format) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head
+#... )((format) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(format) }
+    QS_INSERT_ESC_BYTE(format)
+..\..\qs\source\qs.cpp  114  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                             _
+#... uint8_t)((format) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head
+#... )((format) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(format) }
+    QS_INSERT_ESC_BYTE(format)
+..\..\qs\source\qs.cpp  114  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  115  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  115  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  117  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  117  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+_
+}
+..\..\qs\source\qs.cpp  118  Note 952: Parameter 'format' (line 113) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs.cpp  113  Info 830: Location cited in prior message
+                                         _
+void QS::u32(uint8_t format, uint32_t d) {
+..\..\qs\source\qs.cpp  120  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                             _
+#... uint8_t)((format) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head
+#... )((format) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(format) }
+    QS_INSERT_ESC_BYTE(format)
+..\..\qs\source\qs.cpp  121  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                             _
+#... uint8_t)((format) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head
+#... )((format) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(format) }
+    QS_INSERT_ESC_BYTE(format)
+..\..\qs\source\qs.cpp  121  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  122  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  122  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  124  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  124  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  126  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  126  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  128  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs.cpp  128  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+_
+}
+..\..\qs\source\qs.cpp  129  Note 952: Parameter 'format' (line 120) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs.cpp  120  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qs\source\qs_.cpp (C++)
+                      _
+void const *QS::smObj_;                  // local state machine for QEP filter
+..\..\qs\source\qs_.cpp  35  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                      _
+void const *QS::aoObj_;                   // local active object for QF filter
+..\..\qs\source\qs_.cpp  36  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                      _
+void const *QS::mpObj_;                     //  local event pool for QF filter
+..\..\qs\source\qs_.cpp  37  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                      _
+void const *QS::eqObj_;                      //  local raw queue for QF filter
+..\..\qs\source\qs_.cpp  38  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                      _
+void const *QS::teObj_;                     //  local time event for QF filter
+..\..\qs\source\qs_.cpp  39  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                      _
+void const *QS::apObj_;                    //  local object Application filter
+..\..\qs\source\qs_.cpp  40  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                               _
+QSTimeCtr volatile QS::tickCtr_;     // tick counter for the QS_QF_TICK record
+..\..\qs\source\qs_.cpp  42  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                        _
+void QS::u8_(uint8_t d) {
+..\..\qs\source\qs_.cpp  45  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                        _
+#... uint8_t)((d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head_ = (
+#... )((d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(d) }
+    QS_INSERT_ESC_BYTE(d)
+..\..\qs\source\qs_.cpp  46  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                        _
+#... uint8_t)((d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head_ = (
+#... )((d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(d) }
+    QS_INSERT_ESC_BYTE(d)
+..\..\qs\source\qs_.cpp  46  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+_
+}
+..\..\qs\source\qs_.cpp  47  Note 952: Parameter 'd' (line 45) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs_.cpp  45  Info 830: Location cited in prior message
+                          _
+void QS::u16_(uint16_t d) {
+..\..\qs\source\qs_.cpp  49  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  50  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  50  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  52  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  52  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                          _
+void QS::u32_(uint32_t d) {
+..\..\qs\source\qs_.cpp  55  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  56  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  58  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  58  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  60  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  60  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  62  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: ^
+                                 _
+#... uint8_t)(((uint8_t)d) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_
+#... )(((uint8_t)d) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)d) }
+    QS_INSERT_ESC_BYTE((uint8_t)d)
+..\..\qs\source\qs_.cpp  62  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                             _
+void QS::str_(char const *s) {
+..\..\qs\source\qs_.cpp  66  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                                                  _
+void QS::str_ROM_(char const Q_ROM * Q_ROM_VAR s) {
+..\..\qs\source\qs_.cpp  77  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+
+--- Module:   ..\..\qs\source\qs_blk.cpp (C++)
+                                               _
+uint8_t const *QS::getBlock(uint16_t *pNbytes) {
+..\..\qs\source\qs_blk.cpp  36  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+
+--- Module:   ..\..\qs\source\qs_byte.cpp (C++)
+                           _
+uint16_t QS::getByte(void) {
+..\..\qs\source\qs_byte.cpp  35  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+
+--- Module:   ..\..\qs\source\qs_f32.cpp (C++)
+                                      _
+void QS::f32(uint8_t format, float f) {
+..\..\qs\source\qs_f32.cpp  35  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 8-4-2, function parameter list differs from prior declaration
+..\..\qs\source\qs_f32.cpp  35  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+    _
+    union F32Rep {
+..\..\qs\source\qs_f32.cpp  36  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 9-5-1, unions shall not be used
+                             _
+#... uint8_t)((format) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head
+#... )((format) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(format) }
+    QS_INSERT_ESC_BYTE(format)
+..\..\qs\source\qs_f32.cpp  42  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                             _
+#... uint8_t)((format) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head
+#... )((format) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(format) }
+    QS_INSERT_ESC_BYTE(format)
+..\..\qs\source\qs_f32.cpp  42  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                      _
+#... uint8_t)(((uint8_t)fu32.u) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) 
+#... )(((uint8_t)fu32.u) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu32.u
+    QS_INSERT_ESC_BYTE((uint8_t)fu32.u)
+..\..\qs\source\qs_f32.cpp  43  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                      _
+#... uint8_t)(((uint8_t)fu32.u) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) 
+#... )(((uint8_t)fu32.u) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu32.u
+    QS_INSERT_ESC_BYTE((uint8_t)fu32.u)
+..\..\qs\source\qs_f32.cpp  43  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                      _
+#... uint8_t)(((uint8_t)fu32.u) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) 
+#... )(((uint8_t)fu32.u) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu32.u
+    QS_INSERT_ESC_BYTE((uint8_t)fu32.u)
+..\..\qs\source\qs_f32.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                      _
+#... uint8_t)(((uint8_t)fu32.u) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) 
+#... )(((uint8_t)fu32.u) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu32.u
+    QS_INSERT_ESC_BYTE((uint8_t)fu32.u)
+..\..\qs\source\qs_f32.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                      _
+#... uint8_t)(((uint8_t)fu32.u) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) 
+#... )(((uint8_t)fu32.u) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu32.u
+    QS_INSERT_ESC_BYTE((uint8_t)fu32.u)
+..\..\qs\source\qs_f32.cpp  47  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                      _
+#... uint8_t)(((uint8_t)fu32.u) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) 
+#... )(((uint8_t)fu32.u) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu32.u
+    QS_INSERT_ESC_BYTE((uint8_t)fu32.u)
+..\..\qs\source\qs_f32.cpp  47  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                      _
+#... uint8_t)(((uint8_t)fu32.u) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) 
+#... )(((uint8_t)fu32.u) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu32.u
+    QS_INSERT_ESC_BYTE((uint8_t)fu32.u)
+..\..\qs\source\qs_f32.cpp  49  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                      _
+#... uint8_t)(((uint8_t)fu32.u) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) 
+#... )(((uint8_t)fu32.u) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu32.u
+    QS_INSERT_ESC_BYTE((uint8_t)fu32.u)
+..\..\qs\source\qs_f32.cpp  49  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+_
+}
+..\..\qs\source\qs_f32.cpp  50  Note 952: Parameter 'format' (line 35) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs_f32.cpp  35  Info 830: Location cited in prior message
+_
+}
+..\..\qs\source\qs_f32.cpp  50  Note 952: Parameter 'f' (line 35) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs_f32.cpp  35  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qs\source\qs_f64.cpp (C++)
+                                       _
+void QS::f64(uint8_t format, double d) {
+..\..\qs\source\qs_f64.cpp  35  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+    _
+    union F64Rep {
+..\..\qs\source\qs_f64.cpp  36  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 9-5-1, unions shall not be used
+                       _
+            uint32_t u1, u2;
+..\..\qs\source\qs_f64.cpp  39  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 8-0-1, Multiple declarators in a declaration
+                             _
+#... uint8_t)((format) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head
+#... )((format) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(format) }
+    QS_INSERT_ESC_BYTE(format)
+..\..\qs\source\qs_f64.cpp  44  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                             _
+#... uint8_t)((format) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head
+#... )((format) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(format) }
+    QS_INSERT_ESC_BYTE(format)
+..\..\qs\source\qs_f64.cpp  44  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u1) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u1) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u1)
+..\..\qs\source\qs_f64.cpp  46  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u1) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u1) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u1)
+..\..\qs\source\qs_f64.cpp  46  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u1) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u1) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u1)
+..\..\qs\source\qs_f64.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u1) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u1) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u1)
+..\..\qs\source\qs_f64.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u1) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u1) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u1)
+..\..\qs\source\qs_f64.cpp  50  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u1) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u1) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u1)
+..\..\qs\source\qs_f64.cpp  50  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u1) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u1) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u1)
+..\..\qs\source\qs_f64.cpp  52  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u1) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u1) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u1)
+..\..\qs\source\qs_f64.cpp  52  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u2) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u2) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u2)
+..\..\qs\source\qs_f64.cpp  54  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u2) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u2) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u2)
+..\..\qs\source\qs_f64.cpp  54  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u2) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u2) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u2)
+..\..\qs\source\qs_f64.cpp  56  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u2) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u2) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u2)
+..\..\qs\source\qs_f64.cpp  56  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u2) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u2) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u2)
+..\..\qs\source\qs_f64.cpp  58  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u2) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u2) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u2)
+..\..\qs\source\qs_f64.cpp  58  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u2) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u2) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u2)
+..\..\qs\source\qs_f64.cpp  60  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                                         _
+#... uint8_t)(((uint8_t)fu64.i.u2) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end
+#... )(((uint8_t)fu64.i.u2) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE((uint8_t)fu6
+    QS_INSERT_ESC_BYTE((uint8_t)fu64.i.u2)
+..\..\qs\source\qs_f64.cpp  60  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+_
+}
+..\..\qs\source\qs_f64.cpp  61  Note 952: Parameter 'format' (line 35) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs_f64.cpp  35  Info 830: Location cited in prior message
+_
+}
+..\..\qs\source\qs_f64.cpp  61  Note 952: Parameter 'd' (line 35) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qs\source\qs_f64.cpp  35  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qs\source\qs_mem.cpp (C++)
+                                               _
+void QS::mem(uint8_t const *blk, uint8_t size) {
+..\..\qs\source\qs_mem.cpp  35  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                    _
+#... [QS_head_] = ((uint8_t)QS_MEM_T); ++QS_head_; if (QS_head_ == QS_end_) { Q
+    QS_INSERT_BYTE((uint8_t)QS_MEM_T)
+..\..\qs\source\qs_mem.cpp  36  Note 930: cast from enum to unsigned char
+                                                         _
+    QS_chksum_ = (uint8_t)(QS_chksum_ + (uint8_t)QS_MEM_T);
+..\..\qs\source\qs_mem.cpp  37  Note 930: cast from enum to unsigned char
+                           _
+#... uint8_t)((size) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head_ 
+#... )((size) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(size) }
+    QS_INSERT_ESC_BYTE(size)
+..\..\qs\source\qs_mem.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                           _
+#... uint8_t)((size) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_head_ 
+#... )((size) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(size) }
+    QS_INSERT_ESC_BYTE(size)
+..\..\qs\source\qs_mem.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                               _
+#... = ((uint8_t)((*blk) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_he
+#... t8_t)((*blk) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(*blk) }
+        QS_INSERT_ESC_BYTE(*blk)
+..\..\qs\source\qs_mem.cpp  40  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: ^
+                               _
+#... = ((uint8_t)((*blk) ^ 0x20)); ++QS_head_; if (QS_head_ == QS_end_) { QS_he
+#... t8_t)((*blk) ^ QS_ESC_XOR)) } else { QS_INSERT_BYTE(*blk) }
+        QS_INSERT_ESC_BYTE(*blk)
+..\..\qs\source\qs_mem.cpp  40  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+
+--- Module:   ..\..\qs\source\qs_str.cpp (C++)
+                            _
+void QS::str(char const *s) {
+..\..\qs\source\qs_str.cpp  36  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                    _
+#... [QS_head_] = ((uint8_t)QS_STR_T); ++QS_head_; if (QS_head_ == QS_end_) { Q
+    QS_INSERT_BYTE((uint8_t)QS_STR_T)
+..\..\qs\source\qs_str.cpp  37  Note 930: cast from enum to unsigned char
+                                                         _
+    QS_chksum_ = (uint8_t)(QS_chksum_ + (uint8_t)QS_STR_T);
+..\..\qs\source\qs_str.cpp  38  Note 930: cast from enum to unsigned char
+                                                 _
+void QS::str_ROM(char const Q_ROM * Q_ROM_VAR s) {
+..\..\qs\source\qs_str.cpp  49  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                    _
+#... [QS_head_] = ((uint8_t)QS_STR_T); ++QS_head_; if (QS_head_ == QS_end_) { Q
+    QS_INSERT_BYTE((uint8_t)QS_STR_T)
+..\..\qs\source\qs_str.cpp  50  Note 930: cast from enum to unsigned char
+                                                         _
+    QS_chksum_ = (uint8_t)(QS_chksum_ + (uint8_t)QS_STR_T);
+..\..\qs\source\qs_str.cpp  51  Note 930: cast from enum to unsigned char
+
+--- Additional Misra Messages:
+
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QPSet64::insert(unsigned char)
+    volatile
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QPSet64::remove(unsigned char)
+    volatile
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QPSet8::insert(unsigned char)
+    volatile
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QPSet8::remove(unsigned char)
+    volatile
+
+--- Global Wrap-up
+
+Note 974: Worst case function for stack usage: 'QS::f64' is finite, requires 24
+    bytes total stack in calling 'no function'. See +stack for a full report.
+    [MISRA C++ Rule 7-5-4]

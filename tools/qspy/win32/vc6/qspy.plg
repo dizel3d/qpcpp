@@ -1,0 +1,59 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: qspy - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\Miro\LOCALS~1\Temp\RSP2BEF.tmp" with contents
+[
+/nologo /ML /W4 /O2 /I "../../qs/include" /I "." /I "../../include" /I "../../../../include" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\software\qpcpp\tools\qspy\win32\vc6\com.cpp"
+"C:\software\qpcpp\tools\qspy\source\dict.cpp"
+"C:\software\qpcpp\tools\qspy\source\getopt.c"
+"C:\software\qpcpp\tools\qspy\source\main.cpp"
+"C:\software\qpcpp\tools\qspy\source\qspy.cpp"
+"C:\software\qpcpp\tools\qspy\win32\vc6\tcp.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\Miro\LOCALS~1\Temp\RSP2BEF.tmp" 
+Creating temporary file "C:\DOCUME~1\Miro\LOCALS~1\Temp\RSP2BF0.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib wsock32.lib /nologo /subsystem:console /incremental:no /pdb:"Release/qspy.pdb" /machine:I386 /out:"Release/qspy.exe" 
+.\Release\com.obj
+.\Release\dict.obj
+.\Release\getopt.obj
+.\Release\main.obj
+.\Release\qspy.obj
+.\Release\tcp.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\Miro\LOCALS~1\Temp\RSP2BF0.tmp"
+<h3>Output Window</h3>
+Compiling...
+com.cpp
+dict.cpp
+C:\software\qpcpp\tools\qspy\source\dict.cpp(186) : warning C4514: 'Dictionary::Dictionary' : unreferenced inline function has been removed
+        ../../include\dict.h(39) : see declaration of 'Dictionary::Dictionary'
+C:\software\qpcpp\tools\qspy\source\dict.cpp(186) : warning C4514: 'SigDictionary::SigDictionary' : unreferenced inline function has been removed
+        ../../include\dict.h(64) : see declaration of 'SigDictionary::SigDictionary'
+Generating Code...
+Compiling...
+getopt.c
+Generating Code...
+Compiling...
+main.cpp
+C:\software\qpcpp\tools\qspy\source\getopt.c(72) : warning C4706: assignment within conditional expression
+qspy.cpp
+tcp.cpp
+C:\software\qpcpp\tools\qspy\win32\vc6\tcp.cpp(111) : warning C4127: conditional expression is constant
+C:\software\qpcpp\tools\qspy\win32\vc6\tcp.cpp(144) : warning C4127: conditional expression is constant
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+qspy.exe - 0 error(s), 5 warning(s)
+</pre>
+</body>
+</html>

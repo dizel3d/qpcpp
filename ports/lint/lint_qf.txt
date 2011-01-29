@@ -1,0 +1,1607 @@
+
+--- Module:   ..\..\qf\source\qa_defer.cpp (C++)
+                             _
+#... this_file[] = "qa_defer"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qa_defer)
+..\..\qf\source\qa_defer.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                  _
+void QActive::defer(QEQueue *eq, QEvent const *e) {
+..\..\qf\source\qa_defer.cpp  39  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+_
+}
+..\..\qf\source\qa_defer.cpp  41  Note 952: Parameter 'e' (line 39) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qa_defer.cpp  39  Info 830: Location cited in prior message
+_
+}
+..\..\qf\source\qa_defer.cpp  41  Info 1762: Member function
+    'QActive::defer(QEQueue *, const struct QEvent *)' could be made const
+    [MISRA C++ Rule 9-3-3]
+                                           _
+QEvent const *QActive::recall(QEQueue *eq) {
+..\..\qf\source\qa_defer.cpp  43  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                             _
+#...   -save  -e960 */if ((e->dynamic_ & 0x3F) > 1) { } else (Q_onAssert(l_this
+            Q_ASSERT((e->dynamic_ & 0x3F) > 1);
+..\..\qf\source\qa_defer.cpp  58  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: &
+                                             _
+#...   -save  -e960 */if ((e->dynamic_ & 0x3F) > 1) { } else (Q_onAssert(l_this
+            Q_ASSERT((e->dynamic_ & 0x3F) > 1);
+..\..\qf\source\qa_defer.cpp  58  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                             _
+#... ve  -e960 */if ((e->dynamic_ & 0x3F) > 1) { } else (Q_onAssert(l_this_file
+            Q_ASSERT((e->dynamic_ & 0x3F) > 1);
+..\..\qf\source\qa_defer.cpp  58  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                             _
+#... /if ((e->dynamic_ & 0x3F) > 1) { } else (Q_onAssert(l_this_file, __LINE__)
+            Q_ASSERT((e->dynamic_ & 0x3F) > 1);
+..\..\qf\source\qa_defer.cpp  58  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                             _
+#... } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+            Q_ASSERT((e->dynamic_ & 0x3F) > 1);
+..\..\qf\source\qa_defer.cpp  58  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                          _
+            --((QEvent *)e)->dynamic_;      // decrement the reference counter
+..\..\qf\source\qa_defer.cpp  64  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-5, attempt to cast away const/volatile from a pointer or reference
+..\..\qf\source\qa_defer.cpp  64  Note 929: cast from pointer to pointer [MISRA
+    C++ Rule 5-2-7]
+
+--- Module:   ..\..\qf\source\qa_fifo.cpp (C++)
+                            _
+#... this_file[] = "qa_fifo"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qa_fifo)
+..\..\qf\source\qa_fifo.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                        _
+void QActive::postFIFO(QEvent const *e) {
+..\..\qf\source\qa_fifo.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                             _
+#...     /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restor
+    QS_BEGIN_NOLOCK_(QS_QF_ACTIVE_POST_FIFO, QS::aoObj_, this)
+..\..\qf\source\qa_fifo.cpp  45  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qa_fifo.cpp  46  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_SIG_(e->sig);                            // the signal of the event
+..\..\qf\source\qa_fifo.cpp  47  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                                   // this active object
+..\..\qf\source\qa_fifo.cpp  48  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+        QS_U8_(e->dynamic_);                  // the QF attribute of the event
+..\..\qf\source\qa_fifo.cpp  49  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                _
+        QS_EQC_(m_eQueue.m_nFree);                   // number of free entries
+..\..\qf\source\qa_fifo.cpp  50  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                               _
+        QS_EQC_(m_eQueue.m_nMin);                // min number of free entries
+..\..\qf\source\qa_fifo.cpp  51  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        ++((QEvent *)e)->dynamic_;          // increment the reference counter
+..\..\qf\source\qa_fifo.cpp  56  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-5, attempt to cast away const/volatile from a pointer or reference
+..\..\qf\source\qa_fifo.cpp  56  Note 929: cast from pointer to pointer [MISRA
+    C++ Rule 5-2-7]
+                                   _
+#... t)0) { QK_SCHEDULE_(); } else ((void)0) /*lint -restore */
+        QACTIVE_EQUEUE_SIGNAL_(this);                // signal the event queue
+..\..\qf\source\qa_fifo.cpp  63  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                   _
+#... K_SCHEDULE_(); } else ((void)0) /*lint -restore */
+        QACTIVE_EQUEUE_SIGNAL_(this);                // signal the event queue
+..\..\qf\source\qa_fifo.cpp  63  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                  _
+#... (m_eQueue.m_nFree != (QEQueueCtr)0) { } else (Q_onAssert(l_this_file, __LI
+        Q_ASSERT(m_eQueue.m_nFree != (QEQueueCtr)0);
+..\..\qf\source\qa_fifo.cpp  67  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                                  _
+#... 0) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+        Q_ASSERT(m_eQueue.m_nFree != (QEQueueCtr)0);
+..\..\qf\source\qa_fifo.cpp  67  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+
+--- Module:   ..\..\qf\source\qa_get_.cpp (C++)
+                            _
+#... this_file[] = "qa_get_"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qa_get_)
+..\..\qf\source\qa_get_.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                  _
+QEvent const *QActive::get_(void) {
+..\..\qf\source\qa_get_.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                             _
+#... = (QEvent *)0) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restor
+#... _frontEvt != (QEvent *)0)
+    QACTIVE_EQUEUE_WAIT_(this);           // wait for event to arrive directly
+..\..\qf\source\qa_get_.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                             _
+#... rt(l_this_file, __LINE__)) /*lint -restore */
+#... _frontEvt != (QEvent *)0)
+    QACTIVE_EQUEUE_WAIT_(this);           // wait for event to arrive directly
+..\..\qf\source\qa_get_.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                           _
+#...   /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore 
+        QS_BEGIN_NOLOCK_(QS_QF_ACTIVE_GET, QS::aoObj_, this)
+..\..\qf\source\qa_get_.cpp  59  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                     _
+            QS_TIME_();                                           // timestamp
+..\..\qf\source\qa_get_.cpp  60  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+            QS_SIG_(e->sig);                       // the signal of this event
+..\..\qf\source\qa_get_.cpp  61  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                        _
+#... e  -e923 */((void)0) /*lint -restore */
+            QS_OBJ_(this);                               // this active object
+..\..\qf\source\qa_get_.cpp  62  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                              _
+            QS_U8_(e->dynamic_);        // the dynamic attributes of the event
+..\..\qf\source\qa_get_.cpp  63  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                    _
+            QS_EQC_(m_eQueue.m_nFree);               // number of free entries
+..\..\qf\source\qa_get_.cpp  64  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                                _
+#...        /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -res
+        QS_BEGIN_NOLOCK_(QS_QF_ACTIVE_GET_LAST, QS::aoObj_, this)
+..\..\qf\source\qa_get_.cpp  71  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                     _
+            QS_TIME_();                                           // timestamp
+..\..\qf\source\qa_get_.cpp  72  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+            QS_SIG_(e->sig);                       // the signal of this event
+..\..\qf\source\qa_get_.cpp  73  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                        _
+#... e  -e923 */((void)0) /*lint -restore */
+            QS_OBJ_(this);                               // this active object
+..\..\qf\source\qa_get_.cpp  74  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                              _
+            QS_U8_(e->dynamic_);        // the dynamic attributes of the event
+..\..\qf\source\qa_get_.cpp  75  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                          _
+uint32_t QF::getQueueMargin(uint8_t prio) {
+..\..\qf\source\qa_get_.cpp  82  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                _
+#...  (active_[prio] != (QActive *)0)) { } else (Q_onAssert(l_this_file, __LINE
+#... t8_t)63) && (active_[prio] != (QActive *)0))
+              && (active_[prio] != (QActive *)0));
+..\..\qf\source\qa_get_.cpp  84  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                                _
+#...  { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... t8_t)63) && (active_[prio] != (QActive *)0))
+              && (active_[prio] != (QActive *)0));
+..\..\qf\source\qa_get_.cpp  84  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+_
+}
+..\..\qf\source\qa_get_.cpp  92  Note 952: Parameter 'prio' (line 82) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qa_get_.cpp  82  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qa_lifo.cpp (C++)
+                            _
+#... this_file[] = "qa_lifo"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qa_lifo)
+..\..\qf\source\qa_lifo.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                        _
+void QActive::postLIFO(QEvent const *e) {
+..\..\qf\source\qa_lifo.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                             _
+#...     /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restor
+    QS_BEGIN_NOLOCK_(QS_QF_ACTIVE_POST_LIFO, QS::aoObj_, this)
+..\..\qf\source\qa_lifo.cpp  45  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qa_lifo.cpp  46  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_SIG_(e->sig);                           // the signal of this event
+..\..\qf\source\qa_lifo.cpp  47  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                                   // this active object
+..\..\qf\source\qa_lifo.cpp  48  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+        QS_U8_(e->dynamic_);            // the dynamic attributes of the event
+..\..\qf\source\qa_lifo.cpp  49  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                _
+        QS_EQC_(m_eQueue.m_nFree);                   // number of free entries
+..\..\qf\source\qa_lifo.cpp  50  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                               _
+        QS_EQC_(m_eQueue.m_nMin);                // min number of free entries
+..\..\qf\source\qa_lifo.cpp  51  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        ++((QEvent *)e)->dynamic_;          // increment the reference counter
+..\..\qf\source\qa_lifo.cpp  56  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-5, attempt to cast away const/volatile from a pointer or reference
+..\..\qf\source\qa_lifo.cpp  56  Note 929: cast from pointer to pointer [MISRA
+    C++ Rule 5-2-7]
+                                   _
+#... t)0) { QK_SCHEDULE_(); } else ((void)0) /*lint -restore */
+        QACTIVE_EQUEUE_SIGNAL_(this);                // signal the event queue
+..\..\qf\source\qa_lifo.cpp  63  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                   _
+#... K_SCHEDULE_(); } else ((void)0) /*lint -restore */
+        QACTIVE_EQUEUE_SIGNAL_(this);                // signal the event queue
+..\..\qf\source\qa_lifo.cpp  63  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                  _
+#... (m_eQueue.m_nFree != (QEQueueCtr)0) { } else (Q_onAssert(l_this_file, __LI
+        Q_ASSERT(m_eQueue.m_nFree != (QEQueueCtr)0);
+..\..\qf\source\qa_lifo.cpp  67  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                                  _
+#... 0) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+        Q_ASSERT(m_eQueue.m_nFree != (QEQueueCtr)0);
+..\..\qf\source\qa_lifo.cpp  67  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+
+--- Module:   ..\..\qf\source\qa_run.cpp (C++)
+                        _
+void QActive::run(void) {
+..\..\qf\source\qa_run.cpp  35  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                      _
+    } while (m_running); // loop until m_running is cleared in QActive::stop()
+..\..\qf\source\qa_run.cpp  42  Note 909: Implicit conversion from unsigned
+    char to bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+
+--- Module:   ..\..\qf\source\qa_sub.cpp (C++)
+                           _
+#... this_file[] = "qa_sub"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qa_sub)
+..\..\qf\source\qa_sub.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                           _
+void QActive::subscribe(QSignal sig) const {
+..\..\qf\source\qa_sub.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                         _
+#...   -e960 */if (((QSignal)Q_USER_SIG <= sig) && (sig < QF_maxSignal_) && ((u
+#... t8_t)63) && (QF::active_[p] == this))
+              && (QF::active_[p] == this));
+..\..\qf\source\qa_sub.cpp  43  Note 930: cast from enum to unsigned char
+                                         _
+#...  (QF::active_[p] == this)) { } else (Q_onAssert(l_this_file, __LINE__)) /*
+#... t8_t)63) && (QF::active_[p] == this))
+              && (QF::active_[p] == this));
+..\..\qf\source\qa_sub.cpp  43  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                         _
+#... se (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... t8_t)63) && (QF::active_[p] == this))
+              && (QF::active_[p] == this));
+..\..\qf\source\qa_sub.cpp  43  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                             _
+#...     /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restor
+    QS_BEGIN_NOLOCK_(QS_QF_ACTIVE_SUBSCRIBE, QS::aoObj_, this)
+..\..\qf\source\qa_sub.cpp  50  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qa_sub.cpp  51  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                   _
+        QS_SIG_(sig);                              // the signal of this event
+..\..\qf\source\qa_sub.cpp  52  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                                   // this active object
+..\..\qf\source\qa_sub.cpp  53  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+_
+}
+..\..\qf\source\qa_sub.cpp  58  Note 952: Parameter 'sig' (line 38) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qa_sub.cpp  38  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qa_usub.cpp (C++)
+                            _
+#... this_file[] = "qa_usub"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qa_usub)
+..\..\qf\source\qa_usub.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                             _
+void QActive::unsubscribe(QSignal sig) const {
+..\..\qf\source\qa_usub.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                         _
+#...   -e960 */if (((QSignal)Q_USER_SIG <= sig) && (sig < QF_maxSignal_) && ((u
+#... t8_t)63) && (QF::active_[p] == this))
+              && (QF::active_[p] == this));
+..\..\qf\source\qa_usub.cpp  43  Note 930: cast from enum to unsigned char
+                                         _
+#...  (QF::active_[p] == this)) { } else (Q_onAssert(l_this_file, __LINE__)) /*
+#... t8_t)63) && (QF::active_[p] == this))
+              && (QF::active_[p] == this));
+..\..\qf\source\qa_usub.cpp  43  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                         _
+#... se (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... t8_t)63) && (QF::active_[p] == this))
+              && (QF::active_[p] == this));
+..\..\qf\source\qa_usub.cpp  43  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                               _
+#...       /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -rest
+    QS_BEGIN_NOLOCK_(QS_QF_ACTIVE_UNSUBSCRIBE, QS::aoObj_, this)
+..\..\qf\source\qa_usub.cpp  50  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qa_usub.cpp  51  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                   _
+        QS_SIG_(sig);                              // the signal of this event
+..\..\qf\source\qa_usub.cpp  52  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                                   // this active object
+..\..\qf\source\qa_usub.cpp  53  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+_
+}
+..\..\qf\source\qa_usub.cpp  58  Note 952: Parameter 'sig' (line 38) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qa_usub.cpp  38  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qa_usuba.cpp (C++)
+                             _
+#... this_file[] = "qa_usuba"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qa_usuba)
+..\..\qf\source\qa_usuba.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                         _
+void QActive::unsubscribeAll(void) const {
+..\..\qf\source\qa_usuba.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                         _
+#...  (QF::active_[p] == this)) { } else (Q_onAssert(l_this_file, __LINE__)) /*
+#... t8_t)63) && (QF::active_[p] == this))
+              && (QF::active_[p] == this));
+..\..\qf\source\qa_usuba.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                         _
+#... se (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... t8_t)63) && (QF::active_[p] == this))
+              && (QF::active_[p] == this));
+..\..\qf\source\qa_usuba.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                  _
+    for (sig = (QSignal)Q_USER_SIG; sig < QF_maxSignal_; ++sig) {
+..\..\qf\source\qa_usuba.cpp  46  Note 930: cast from enum to unsigned char
+                 _
+             != 0)
+..\..\qf\source\qa_usuba.cpp  50  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                                                       _
+#...               /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*li
+            QS_BEGIN_NOLOCK_(QS_QF_ACTIVE_UNSUBSCRIBE, QS::aoObj_, this)
+..\..\qf\source\qa_usuba.cpp  53  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                         _
+                QS_TIME_();                                       // timestamp
+..\..\qf\source\qa_usuba.cpp  54  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                           _
+                QS_SIG_(sig);                      // the signal of this event
+..\..\qf\source\qa_usuba.cpp  55  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                            _
+#... -save  -e923 */((void)0) /*lint -restore */
+                QS_OBJ_(this);                           // this active object
+..\..\qf\source\qa_usuba.cpp  56  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+
+--- Module:   ..\..\qf\source\qeq_fifo.cpp (C++)
+                             _
+#... this_file[] = "qeq_fifo"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qeq_fifo)
+..\..\qf\source\qeq_fifo.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                        _
+void QEQueue::postFIFO(QEvent const *e) {
+..\..\qf\source\qeq_fifo.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                             _
+#...     /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restor
+    QS_BEGIN_NOLOCK_(QS_QF_EQUEUE_POST_FIFO, QS::eqObj_, this)
+..\..\qf\source\qeq_fifo.cpp  42  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qeq_fifo.cpp  43  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_SIG_(e->sig);                           // the signal of this event
+..\..\qf\source\qeq_fifo.cpp  44  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                                    // this queue object
+..\..\qf\source\qeq_fifo.cpp  45  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+        QS_U8_(e->dynamic_);            // the dynamic attributes of the event
+..\..\qf\source\qeq_fifo.cpp  46  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+        QS_EQC_(m_nFree);                            // number of free entries
+..\..\qf\source\qeq_fifo.cpp  47  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_EQC_(m_nMin);                         // min number of free entries
+..\..\qf\source\qeq_fifo.cpp  48  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        ++((QEvent *)e)->dynamic_;          // increment the reference counter
+..\..\qf\source\qeq_fifo.cpp  53  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-5, attempt to cast away const/volatile from a pointer or reference
+..\..\qf\source\qeq_fifo.cpp  53  Note 929: cast from pointer to pointer [MISRA
+    C++ Rule 5-2-7]
+                                         _
+#... (m_nFree != (QEQueueCtr)0) { } else (Q_onAssert(l_this_file, __LINE__)) /*
+        Q_ASSERT(m_nFree != (QEQueueCtr)0);
+..\..\qf\source\qeq_fifo.cpp  63  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                         _
+#... se (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+        Q_ASSERT(m_nFree != (QEQueueCtr)0);
+..\..\qf\source\qeq_fifo.cpp  63  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+
+--- Module:   ..\..\qf\source\qeq_get.cpp (C++)
+                                 _
+QEvent const *QEQueue::get(void) {
+..\..\qf\source\qeq_get.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                               _
+#...       /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -rest
+            QS_BEGIN_NOLOCK_(QS_QF_EQUEUE_GET, QS::eqObj_, this)
+..\..\qf\source\qeq_get.cpp  58  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                         _
+                QS_TIME_();                                       // timestamp
+..\..\qf\source\qeq_get.cpp  59  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                              _
+                QS_SIG_(e->sig);                   // the signal of this event
+..\..\qf\source\qeq_get.cpp  60  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                            _
+#... -save  -e923 */((void)0) /*lint -restore */
+                QS_OBJ_(this);                            // this queue object
+..\..\qf\source\qeq_get.cpp  61  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                  _
+                QS_U8_(e->dynamic_);    // the dynamic attributes of the event
+..\..\qf\source\qeq_get.cpp  62  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                               _
+                QS_EQC_(m_nFree);                    // number of free entries
+..\..\qf\source\qeq_get.cpp  63  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                                    _
+#...            /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint 
+            QS_BEGIN_NOLOCK_(QS_QF_EQUEUE_GET_LAST, QS::eqObj_, this)
+..\..\qf\source\qeq_get.cpp  69  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                         _
+                QS_TIME_();                                       // timestamp
+..\..\qf\source\qeq_get.cpp  70  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                              _
+                QS_SIG_(e->sig);                   // the signal of this event
+..\..\qf\source\qeq_get.cpp  71  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                            _
+#... -save  -e923 */((void)0) /*lint -restore */
+                QS_OBJ_(this);                            // this queue object
+..\..\qf\source\qeq_get.cpp  72  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                  _
+                QS_U8_(e->dynamic_);     // the dynamic attribute of the event
+..\..\qf\source\qeq_get.cpp  73  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+
+--- Module:   ..\..\qf\source\qeq_init.cpp (C++)
+                                                          _
+void QEQueue::init(QEvent const *qSto[], QEQueueCtr qLen) {
+..\..\qf\source\qeq_init.cpp  35  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                 _
+#...  -e506 -e774 -e572 -e778 -e912 -e717 */if (0) { /*lint -restore */
+    QS_BEGIN_(QS_QF_EQUEUE_INIT, QS::eqObj_, this)
+..\..\qf\source\qeq_init.cpp  45  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(qSto);                                  // this QEQueue object
+..\..\qf\source\qeq_init.cpp  46  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+        QS_EQC_(qLen);                              // the length of the queue
+..\..\qf\source\qeq_init.cpp  47  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+_
+}
+..\..\qf\source\qeq_init.cpp  49  Note 952: Parameter 'qLen' (line 35) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qeq_init.cpp  35  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qeq_lifo.cpp (C++)
+                             _
+#... this_file[] = "qeq_lifo"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qeq_lifo)
+..\..\qf\source\qeq_lifo.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                        _
+void QEQueue::postLIFO(QEvent const *e) {
+..\..\qf\source\qeq_lifo.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                             _
+#...     /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restor
+    QS_BEGIN_NOLOCK_(QS_QF_EQUEUE_POST_LIFO, QS::eqObj_, this)
+..\..\qf\source\qeq_lifo.cpp  42  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qeq_lifo.cpp  43  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_SIG_(e->sig);                           // the signal of this event
+..\..\qf\source\qeq_lifo.cpp  44  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                                    // this queue object
+..\..\qf\source\qeq_lifo.cpp  45  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+        QS_U8_(e->dynamic_);             // the dynamic attribute of the event
+..\..\qf\source\qeq_lifo.cpp  46  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+        QS_EQC_(m_nFree);                            // number of free entries
+..\..\qf\source\qeq_lifo.cpp  47  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_EQC_(m_nMin);                         // min number of free entries
+..\..\qf\source\qeq_lifo.cpp  48  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        ++((QEvent *)e)->dynamic_;          // increment the reference counter
+..\..\qf\source\qeq_lifo.cpp  53  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-5, attempt to cast away const/volatile from a pointer or reference
+..\..\qf\source\qeq_lifo.cpp  53  Note 929: cast from pointer to pointer [MISRA
+    C++ Rule 5-2-7]
+                                         _
+#... (m_nFree != (QEQueueCtr)0) { } else (Q_onAssert(l_this_file, __LINE__)) /*
+        Q_ASSERT(m_nFree != (QEQueueCtr)0);
+..\..\qf\source\qeq_lifo.cpp  60  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                         _
+#... se (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+        Q_ASSERT(m_nFree != (QEQueueCtr)0);
+..\..\qf\source\qeq_lifo.cpp  60  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+
+--- Module:   ..\..\qf\source\qf_act.cpp (C++)
+                           _
+#... this_file[] = "qf_act"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qf_act)
+..\..\qf\source\qf_act.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                       _
+QActive *QF::active_[QF_MAX_ACTIVE + 1];        // to be used by QF ports only
+..\..\qf\source\qf_act.cpp  39  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                       _
+uint8_t QF_intLockNest_;                       // interrupt-lock nesting level
+..\..\qf\source\qf_act.cpp  40  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+      _
+const char Q_ROM * Q_ROM_VAR QF::getVersion(void) {
+..\..\qf\source\qf_act.cpp  44  Note 963: Qualifier const or volatile precedes
+    a type; use +fqb to reverse the test
+..\..\qf\source\qf_act.cpp  44  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                          _
+        ((QP_VERSION >> 12) & 0xF) + '0',
+..\..\qf\source\qf_act.cpp  46  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qf\source\qf_act.cpp  46  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qf\source\qf_act.cpp  46  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qf\source\qf_act.cpp  46  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-6, Implicit conversion of integer to smaller type
+..\..\qf\source\qf_act.cpp  46  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-11, Disallowed use of non-character value in the initialization of
+    an object of a plain char type
+                          _
+        ((QP_VERSION >>  8) & 0xF) + '0',
+..\..\qf\source\qf_act.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qf\source\qf_act.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qf\source\qf_act.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qf\source\qf_act.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-6, Implicit conversion of integer to smaller type
+..\..\qf\source\qf_act.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-11, Disallowed use of non-character value in the initialization of
+    an object of a plain char type
+                          _
+        ((QP_VERSION >>  4) & 0xF) + '0',
+..\..\qf\source\qf_act.cpp  50  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: >>
+..\..\qf\source\qf_act.cpp  50  Info 778: Constant expression evaluates to 0 in
+    operation '&'
+..\..\qf\source\qf_act.cpp  50  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qf\source\qf_act.cpp  50  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qf\source\qf_act.cpp  50  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-6, Implicit conversion of integer to smaller type
+..\..\qf\source\qf_act.cpp  50  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-11, Disallowed use of non-character value in the initialization of
+    an object of a plain char type
+                                 _
+        (QP_VERSION         & 0xF) + '0',
+..\..\qf\source\qf_act.cpp  51  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qf\source\qf_act.cpp  51  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qf\source\qf_act.cpp  51  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-6, Implicit conversion of integer to smaller type
+..\..\qf\source\qf_act.cpp  51  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-11, Disallowed use of non-character value in the initialization of
+    an object of a plain char type
+                          _
+void QF::add_(QActive *a) {
+..\..\qf\source\qf_act.cpp  57  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                             _
+#...  (active_[p] == (QActive *)0)) { } else (Q_onAssert(l_this_file, __LINE__)
+#... t8_t)63) && (active_[p] == (QActive *)0))
+              && (active_[p] == (QActive *)0));
+..\..\qf\source\qf_act.cpp  61  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                             _
+#... } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... t8_t)63) && (active_[p] == (QActive *)0))
+              && (active_[p] == (QActive *)0));
+..\..\qf\source\qf_act.cpp  61  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                    _
+#... t  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_NOLOCK_(QS_QF_ACTIVE_ADD, QS::aoObj_, a)
+..\..\qf\source\qf_act.cpp  68  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qf_act.cpp  69  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                 _
+#... 3 */((void)0) /*lint -restore */
+        QS_OBJ_(a);                                       // the active object
+..\..\qf\source\qf_act.cpp  70  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                _
+        QS_U8_(p);                        // the priority of the active object
+..\..\qf\source\qf_act.cpp  71  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                                   _
+void QF::remove_(QActive const *a) {
+..\..\qf\source\qf_act.cpp  77  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                  _
+#...  (active_[p] == a)) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -r
+#... t8_t)63) && (active_[p] == a))
+              && (active_[p] == a));
+..\..\qf\source\qf_act.cpp  81  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                  _
+#... nAssert(l_this_file, __LINE__)) /*lint -restore */
+#... t8_t)63) && (active_[p] == a))
+              && (active_[p] == a));
+..\..\qf\source\qf_act.cpp  81  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                       _
+#... lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_NOLOCK_(QS_QF_ACTIVE_REMOVE, QS::aoObj_, a)
+..\..\qf\source\qf_act.cpp  88  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qf_act.cpp  89  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                 _
+#... 3 */((void)0) /*lint -restore */
+        QS_OBJ_(a);                                       // the active object
+..\..\qf\source\qf_act.cpp  90  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                _
+        QS_U8_(p);                        // the priority of the active object
+..\..\qf\source\qf_act.cpp  91  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+_
+}
+..\..\qf\source\qf_act.cpp  95  Note 952: Parameter 'a' (line 77) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qf_act.cpp  77  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qf_gc.cpp (C++)
+                          _
+#... this_file[] = "qf_gc"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qf_gc)
+..\..\qf\source\qf_gc.cpp  31  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                             _
+void QF::gc(QEvent const *e) {
+..\..\qf\source\qf_gc.cpp  38  Note 1960: Violates MISRA C++ 2008 Required Rule
+    7-3-1, Global declaration
+                               _
+        if ((e->dynamic_ & 0x3F) > 1) {      // isn't this the last reference?
+..\..\qf\source\qf_gc.cpp  43  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-21, Bitwise operator applied to signed underlying type: &
+..\..\qf\source\qf_gc.cpp  43  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+..\..\qf\source\qf_gc.cpp  43  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                          _
+            --((QEvent *)e)->dynamic_;      // decrement the reference counter
+..\..\qf\source\qf_gc.cpp  46  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-2-5, attempt to cast away const/volatile from a pointer or reference
+..\..\qf\source\qf_gc.cpp  46  Note 929: cast from pointer to pointer [MISRA
+    C++ Rule 5-2-7]
+                                                                   _
+#...           /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -
+            QS_BEGIN_NOLOCK_(QS_QF_GC_ATTEMPT, (void *)0, (void *)0)
+..\..\qf\source\qf_gc.cpp  50  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                         _
+                QS_TIME_();                                       // timestamp
+..\..\qf\source\qf_gc.cpp  51  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                              _
+                QS_SIG_(e->sig);                    // the signal of the event
+..\..\qf\source\qf_gc.cpp  52  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                                  _
+                QS_U8_(e->dynamic_);    // the dynamic attributes of the event
+..\..\qf\source\qf_gc.cpp  53  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                                                          _
+            uint8_t idx = (uint8_t)((e->dynamic_ >> 6) - 1);
+..\..\qf\source\qf_gc.cpp  59  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-0-4, Implicit conversion changes signedness
+                                                           _
+#...   /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore 
+            QS_BEGIN_NOLOCK_(QS_QF_GC, (void *)0, (void *)0)
+..\..\qf\source\qf_gc.cpp  61  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                         _
+                QS_TIME_();                                       // timestamp
+..\..\qf\source\qf_gc.cpp  62  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                              _
+                QS_SIG_(e->sig);                    // the signal of the event
+..\..\qf\source\qf_gc.cpp  63  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                                  _
+                QS_U8_(e->dynamic_);    // the dynamic attributes of the event
+..\..\qf\source\qf_gc.cpp  64  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                                      _
+#... /if (idx < QF_maxPool_) { } else (Q_onAssert(l_this_file, __LINE__)) /*lin
+            Q_ASSERT(idx < QF_maxPool_);
+..\..\qf\source\qf_gc.cpp  69  Note 1960: Violates MISRA C++ 2008 Required Rule
+    6-4-1, left brace expected for if and else
+                                      _
+#... (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+            Q_ASSERT(idx < QF_maxPool_);
+..\..\qf\source\qf_gc.cpp  69  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-2-12, Array type passed to function expecting a pointer
+                                                    _
+            QF_EPOOL_PUT_(QF_pool_[idx], (QEvent *)e);   // cast 'const' away,
+..\..\qf\source\qf_gc.cpp  72  Note 1960: Violates MISRA C++ 2008 Required Rule
+    5-2-5, attempt to cast away const/volatile from a pointer or reference
+..\..\qf\source\qf_gc.cpp  72  Note 929: cast from pointer to pointer [MISRA
+    C++ Rule 5-2-7]
+
+--- Module:   ..\..\qf\source\qf_log2.cpp (C++)
+ _
+};
+..\..\qf\source\qf_log2.cpp  52  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+
+--- Module:   ..\..\qf\source\qf_new.cpp (C++)
+                           _
+#... this_file[] = "qf_new"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qf_new)
+..\..\qf\source\qf_new.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                _
+QEvent *QF::new_(uint16_t evtSize, QSignal sig) {
+..\..\qf\source\qf_new.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                 _
+#... (id < QF_maxPool_) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -re
+        Q_ASSERT(id < QF_maxPool_);      // cannot run out of registered pools
+..\..\qf\source\qf_new.cpp  43  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                 _
+#... Assert(l_this_file, __LINE__)) /*lint -restore */
+        Q_ASSERT(id < QF_maxPool_);      // cannot run out of registered pools
+..\..\qf\source\qf_new.cpp  43  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                             _
+#... 06 -e774 -e572 -e778 -e912 -e717 */if (0) { /*lint -restore */
+    QS_BEGIN_(QS_QF_NEW, (void *)0, (void *)0)
+..\..\qf\source\qf_new.cpp  47  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qf_new.cpp  48  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                       _
+        QS_EVS_(evtSize);                             // the size of the event
+..\..\qf\source\qf_new.cpp  49  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                   _
+        QS_SIG_(sig);                               // the signal of the event
+..\..\qf\source\qf_new.cpp  50  Note 920: cast from int to void [MISRA C++ Rule
+    5-2-7]
+                             _
+#... = (QEvent *)0) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restor
+    Q_ASSERT(e != (QEvent *)0);             // pool must not run out of events
+..\..\qf\source\qf_new.cpp  55  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                             _
+#... rt(l_this_file, __LINE__)) /*lint -restore */
+    Q_ASSERT(e != (QEvent *)0);             // pool must not run out of events
+..\..\qf\source\qf_new.cpp  55  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                   _
+    e->dynamic_ = (uint8_t)((id + 1) << 6);
+..\..\qf\source\qf_new.cpp  61  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+_
+}
+..\..\qf\source\qf_new.cpp  63  Note 952: Parameter 'evtSize' (line 38) could
+    be declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qf_new.cpp  38  Info 830: Location cited in prior message
+_
+}
+..\..\qf\source\qf_new.cpp  63  Note 952: Parameter 'sig' (line 38) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qf_new.cpp  38  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qf_pool.cpp (C++)
+                            _
+#... this_file[] = "qf_pool"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qf_pool)
+..\..\qf\source\qf_pool.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                          _
+QF_EPOOL_TYPE_ QF_pool_[3];                          // allocate 3 event pools
+..\..\qf\source\qf_pool.cpp  39  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                   _
+uint8_t QF_maxPool_;                      // number of initialized event pools
+..\..\qf\source\qf_pool.cpp  40  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                                        _
+void QF::poolInit(void *poolSto, uint32_t poolSize, QEventSize evtSize) {
+..\..\qf\source\qf_pool.cpp  43  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                    _
+#... eof(QF_pool_) / sizeof(QF_pool_[0]))) { } else (Q_onAssert(l_this_file, __
+#... int8_t)(sizeof(QF_pool_) / sizeof(QF_pool_[0])))
+    Q_REQUIRE(QF_maxPool_ < (uint8_t)Q_DIM(QF_pool_));
+..\..\qf\source\qf_pool.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                                    _
+#... ]))) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... int8_t)(sizeof(QF_pool_) / sizeof(QF_pool_[0])))
+    Q_REQUIRE(QF_maxPool_ < (uint8_t)Q_DIM(QF_pool_));
+..\..\qf\source\qf_pool.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                                            _
+#...  -e960 */if ((QF_maxPool_ == (uint8_t)0) || (((QF_pool_[QF_maxPool_ - 1]).
+#... (uint8_t)0) || (((QF_pool_[QF_maxPool_ - 1]).getBlockSize()) < evtSize))
+              || (QF_EPOOL_EVENT_SIZE_(QF_pool_[QF_maxPool_ - 1]) < evtSize));
+..\..\qf\source\qf_pool.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-4, Implicit conversion changes signedness
+                                                                            _
+#... (uint8_t)0) || (((QF_pool_[QF_maxPool_ - 1]).getBlockSize()) < evtSize)) {
+#... (uint8_t)0) || (((QF_pool_[QF_maxPool_ - 1]).getBlockSize()) < evtSize))
+              || (QF_EPOOL_EVENT_SIZE_(QF_pool_[QF_maxPool_ - 1]) < evtSize));
+..\..\qf\source\qf_pool.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-14-1, side effects on right hand of logical operator: '||'
+                                                                            _
+#...  || (((QF_pool_[QF_maxPool_ - 1]).getBlockSize()) < evtSize)) { } else (Q_
+#... (uint8_t)0) || (((QF_pool_[QF_maxPool_ - 1]).getBlockSize()) < evtSize))
+              || (QF_EPOOL_EVENT_SIZE_(QF_pool_[QF_maxPool_ - 1]) < evtSize));
+..\..\qf\source\qf_pool.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                                                            _
+#... .getBlockSize()) < evtSize)) { } else (Q_onAssert(l_this_file, __LINE__)) 
+#... (uint8_t)0) || (((QF_pool_[QF_maxPool_ - 1]).getBlockSize()) < evtSize))
+              || (QF_EPOOL_EVENT_SIZE_(QF_pool_[QF_maxPool_ - 1]) < evtSize));
+..\..\qf\source\qf_pool.cpp  48  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+
+--- Module:   ..\..\qf\source\qf_psini.cpp (C++)
+                           _
+QSubscrList *QF_subscrList_;
+..\..\qf\source\qf_psini.cpp  36  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                     _
+QSignal QF_maxSignal_;
+..\..\qf\source\qf_psini.cpp  37  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                           _
+void QF::psInit(QSubscrList *subscrSto, QSignal maxSignal) {
+..\..\qf\source\qf_psini.cpp  40  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+_
+}
+..\..\qf\source\qf_psini.cpp  43  Note 952: Parameter 'maxSignal' (line 40)
+    could be declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qf_psini.cpp  40  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qf_pspub.cpp (C++)
+                             _
+#... this_file[] = "qf_pspub"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qf_pspub)
+..\..\qf\source\qf_pspub.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                  _
+void QF::publish(QEvent const *e) {
+..\..\qf\source\qf_pspub.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                    _
+#... >sig < QF_maxSignal_) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint 
+#... Q_ASSERT(e->sig < QF_maxSignal_)
+    Q_REQUIRE(e->sig < QF_maxSignal_);
+..\..\qf\source\qf_pspub.cpp  40  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                    _
+#... _onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... Q_ASSERT(e->sig < QF_maxSignal_)
+    Q_REQUIRE(e->sig < QF_maxSignal_);
+..\..\qf\source\qf_pspub.cpp  40  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                        _
+#... *lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_NOLOCK_(QS_QF_PUBLISH, (void *)0, (void *)0)
+..\..\qf\source\qf_pspub.cpp  45  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                           // the timestamp
+..\..\qf\source\qf_pspub.cpp  46  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_SIG_(e->sig);                            // the signal of the event
+..\..\qf\source\qf_pspub.cpp  47  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+        QS_U8_(e->dynamic_);            // the dynamic attributes of the event
+..\..\qf\source\qf_pspub.cpp  48  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        ++((QEvent *)e)->dynamic_;      // increment reference counter, NOTE01
+..\..\qf\source\qf_pspub.cpp  53  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-5, attempt to cast away const/volatile from a pointer or reference
+..\..\qf\source\qf_pspub.cpp  53  Note 929: cast from pointer to pointer [MISRA
+    C++ Rule 5-2-7]
+                                              _
+    uint8_t i = Q_DIM(QF_subscrList_[0].m_bits);// number of bytes in the list
+..\..\qf\source\qf_pspub.cpp  69  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-6, Implicit conversion of integer to smaller type
+                                      _
+            p = (uint8_t)(p + (i << 3));                // adjust the priority
+..\..\qf\source\qf_pspub.cpp  76  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-10, Operators '~' and '<<' require recasting to underlying type
+    for sub-integers
+                                               _
+#... /if (active_[p] != (QActive *)0) { } else (Q_onAssert(l_this_file, __LINE_
+            Q_ASSERT(active_[p] != (QActive *)0);        // must be registered
+..\..\qf\source\qf_pspub.cpp  77  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                               _
+#... { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+            Q_ASSERT(active_[p] != (QActive *)0);        // must be registered
+..\..\qf\source\qf_pspub.cpp  77  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+
+--- Module:   ..\..\qf\source\qf_pwr2.cpp (C++)
+ _
+};
+..\..\qf\source\qf_pwr2.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+ _
+};
+..\..\qf\source\qf_pwr2.cpp  57  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+ _
+};
+..\..\qf\source\qf_pwr2.cpp  69  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+
+--- Module:   ..\..\qf\source\qf_tick.cpp (C++)
+                    _
+void QF::tick(void) {                                            // see NOTE01
+..\..\qf\source\qf_tick.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                     _
+#... nt  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_NOLOCK_(QS_QF_TICK, (void *)0, (void *)0)
+..\..\qf\source\qf_tick.cpp  42  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                              _
+        QS_TEC_(++QS::tickCtr_);                           // the tick counter
+..\..\qf\source\qf_tick.cpp  43  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                                         _
+#...                 /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*
+                QS_BEGIN_NOLOCK_(QS_QF_TIMEEVT_AUTO_DISARM, QS::teObj_, t)
+..\..\qf\source\qf_tick.cpp  65  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                             _
+#...  -save  -e923 */((void)0) /*lint -restore */
+                    QS_OBJ_(t);                      // this time event object
+..\..\qf\source\qf_tick.cpp  66  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                    _
+#... /*lint  -save  -e923 */((void)0) /*lint -restore */
+                    QS_OBJ_(t->m_act);                     // the active object
+..\..\qf\source\qf_tick.cpp  67  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                              _
+#...      /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -resto
+            QS_BEGIN_NOLOCK_(QS_QF_TIMEEVT_POST, QS::teObj_, t)
+..\..\qf\source\qf_tick.cpp  71  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                         _
+                QS_TIME_();                                       // timestamp
+..\..\qf\source\qf_tick.cpp  72  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                         _
+#... ve  -e923 */((void)0) /*lint -restore */
+                QS_OBJ_(t);                           // the time event object
+..\..\qf\source\qf_tick.cpp  73  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                              _
+                QS_SIG_(t->sig);              // the signal of this time event
+..\..\qf\source\qf_tick.cpp  74  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                _
+#... nt  -save  -e923 */((void)0) /*lint -restore */
+                QS_OBJ_(t->m_act);                        // the active object
+..\..\qf\source\qf_tick.cpp  75  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+        _
+        }
+..\..\qf\source\qf_tick.cpp  87  Warning 550: Symbol 'dummy' (line 85) not
+    accessed [MISRA C++ Rule 0-1-4]
+..\..\qf\source\qf_tick.cpp  85  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qmp_get.cpp (C++)
+                            _
+#... this_file[] = "qmp_get"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qmp_get)
+..\..\qf\source\qmp_get.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                        _
+void *QMPool::get(void) {
+..\..\qf\source\qmp_get.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                         _
+#... /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_NOLOCK_(QS_QF_MPOOL_GET, QS::mpObj_, m_start)
+..\..\qf\source\qmp_get.cpp  51  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qmp_get.cpp  52  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+#...   -e923 */((void)0) /*lint -restore */
+        QS_OBJ_(m_start);                   // the memory managed by this pool
+..\..\qf\source\qmp_get.cpp  53  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+        QS_MPC_(m_nFree);             // the number of free blocks in the pool
+..\..\qf\source\qmp_get.cpp  54  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_MPC_(m_nMin);     // the mninimum number of free blocks in the pool
+..\..\qf\source\qmp_get.cpp  55  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                           _
+uint32_t QF::getPoolMargin(uint8_t poolId) {
+..\..\qf\source\qmp_get.cpp  62  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                               _
+#... uint8_t)1 <= poolId) && (poolId <= QF_maxPool_)) { } else (Q_onAssert(l_th
+#... Q_ASSERT(((uint8_t)1 <= poolId) && (poolId <= QF_maxPool_))
+    Q_REQUIRE(((uint8_t)1 <= poolId) && (poolId <= QF_maxPool_));
+..\..\qf\source\qmp_get.cpp  63  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                                               _
+#... = QF_maxPool_)) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -resto
+#... Q_ASSERT(((uint8_t)1 <= poolId) && (poolId <= QF_maxPool_))
+    Q_REQUIRE(((uint8_t)1 <= poolId) && (poolId <= QF_maxPool_));
+..\..\qf\source\qmp_get.cpp  63  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+_
+}
+..\..\qf\source\qmp_get.cpp  71  Note 952: Parameter 'poolId' (line 62) could
+    be declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qmp_get.cpp  62  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qmp_init.cpp (C++)
+                             _
+#... this_file[] = "qmp_init"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qmp_init)
+..\..\qf\source\qmp_init.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                                          _
+void QMPool::init(void *poolSto, uint32_t poolSize, QMPoolSize blockSize) {
+..\..\qf\source\qmp_init.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                _
+#... k)) > blockSize)) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint -res
+#... f(QFreeBlock)) > blockSize))
+                    > blockSize));
+..\..\qf\source\qmp_init.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                _
+#... ssert(l_this_file, __LINE__)) /*lint -restore */
+#... f(QFreeBlock)) > blockSize))
+                    > blockSize));
+..\..\qf\source\qmp_init.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                               _
+    m_free = (void *)((uint8_t *)poolSto + corr);
+..\..\qf\source\qmp_init.cpp  55  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-0-15, pointer arithmetic other than array indexing used
+                                            _
+#... lSize >= (uint32_t)blockSize) { } else (Q_onAssert(l_this_file, __LINE__))
+    Q_ASSERT(poolSize >= (uint32_t)blockSize);
+..\..\qf\source\qmp_init.cpp  67  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                            _
+#...  else (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+    Q_ASSERT(poolSize >= (uint32_t)blockSize);
+..\..\qf\source\qmp_init.cpp  67  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                   _
+#... e  -e506 -e774 -e572 -e778 -e912 -e717 */if (0) { /*lint -restore */
+    QS_BEGIN_(QS_QF_MPOOL_INIT, QS::mpObj_, m_start)
+..\..\qf\source\qmp_init.cpp  87  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                       _
+#...   -e923 */((void)0) /*lint -restore */
+        QS_OBJ_(m_start);                   // the memory managed by this pool
+..\..\qf\source\qmp_init.cpp  88  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_MPC_(m_nTot);                         // the total number of blocks
+..\..\qf\source\qmp_init.cpp  89  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+
+--- Module:   ..\..\qf\source\qmp_put.cpp (C++)
+                            _
+#... this_file[] = "qmp_put"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qmp_put)
+..\..\qf\source\qmp_put.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                          _
+void QMPool::put(void *b) {
+..\..\qf\source\qmp_put.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                    _
+#...  (m_nFree <= m_nTot)) { } else (Q_onAssert(l_this_file, __LINE__)) /*lint 
+#... = m_end) && (m_nFree <= m_nTot))
+              && (m_nFree <= m_nTot));        // # free blocks must be < total
+..\..\qf\source\qmp_put.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                    _
+#... _onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... = m_end) && (m_nFree <= m_nTot))
+              && (m_nFree <= m_nTot));        // # free blocks must be < total
+..\..\qf\source\qmp_put.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                         _
+#... /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_NOLOCK_(QS_QF_MPOOL_PUT, QS::mpObj_, m_start)
+..\..\qf\source\qmp_put.cpp  50  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qmp_put.cpp  51  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+#...   -e923 */((void)0) /*lint -restore */
+        QS_OBJ_(m_start);                   // the memory managed by this pool
+..\..\qf\source\qmp_put.cpp  52  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                       _
+        QS_MPC_(m_nFree);             // the number of free blocks in the pool
+..\..\qf\source\qmp_put.cpp  53  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+
+--- Module:   ..\..\qf\source\qte_arm.cpp (C++)
+                            _
+#... this_file[] = "qte_arm"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qte_arm)
+..\..\qf\source\qte_arm.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                             _
+QTimeEvt *QF_timeEvtListHead_;           // head of linked list of time events
+..\..\qf\source\qte_arm.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                      _
+void QTimeEvt::arm_(QActive *act, QTimeEvtCtr nTicks) {
+..\..\qf\source\qte_arm.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                      _
+#... 0) && (sig >= (QSignal)Q_USER_SIG) && (m_prev == (QTimeEvt *)0) && (act !=
+#... Evt *)0) && (act != (QActive *)0))
+              && (act != (QActive *)0));  /* active object must be provided */
+..\..\qf\source\qte_arm.cpp  45  Note 930: cast from enum to unsigned char
+                                      _
+#...  (act != (QActive *)0)) { } else (Q_onAssert(l_this_file, __LINE__)) /*lin
+#... Evt *)0) && (act != (QActive *)0))
+              && (act != (QActive *)0));  /* active object must be provided */
+..\..\qf\source\qte_arm.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                      _
+#... (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... Evt *)0) && (act != (QActive *)0))
+              && (act != (QActive *)0));  /* active object must be provided */
+..\..\qf\source\qte_arm.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                        _
+#... *lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore */
+    QS_BEGIN_NOLOCK_(QS_QF_TIMEEVT_ARM, QS::teObj_, this)
+..\..\qf\source\qte_arm.cpp  52  Note 909: Implicit conversion from int to bool
+    [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qte_arm.cpp  53  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                               // this time event object
+..\..\qf\source\qte_arm.cpp  54  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                   _
+#... 923 */((void)0) /*lint -restore */
+        QS_OBJ_(act);                                     // the active object
+..\..\qf\source\qte_arm.cpp  55  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_TEC_(nTicks);                                // the number of ticks
+..\..\qf\source\qte_arm.cpp  56  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+        QS_TEC_(m_interval);                                   // the interval
+..\..\qf\source\qte_arm.cpp  57  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+_
+}
+..\..\qf\source\qte_arm.cpp  66  Note 952: Parameter 'nTicks' (line 41) could
+    be declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qte_arm.cpp  41  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qte_ctor.cpp (C++)
+                             _
+#... this_file[] = "qte_ctor"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qte_ctor)
+..\..\qf\source\qte_ctor.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+    _
+    : m_prev((QTimeEvt *)0),
+..\..\qf\source\qte_ctor.cpp  39  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                      _
+#... 60 */if (s >= (QSignal)Q_USER_SIG) { } else (Q_onAssert(l_this_file, __LIN
+#... Q_ASSERT(s >= (QSignal)Q_USER_SIG)
+    Q_REQUIRE(s >= (QSignal)Q_USER_SIG);                       // valid signal
+..\..\qf\source\qte_ctor.cpp  45  Note 930: cast from enum to unsigned char
+                                      _
+#... >= (QSignal)Q_USER_SIG) { } else (Q_onAssert(l_this_file, __LINE__)) /*lin
+#... Q_ASSERT(s >= (QSignal)Q_USER_SIG)
+    Q_REQUIRE(s >= (QSignal)Q_USER_SIG);                       // valid signal
+..\..\qf\source\qte_ctor.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                      _
+#... (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... Q_ASSERT(s >= (QSignal)Q_USER_SIG)
+    Q_REQUIRE(s >= (QSignal)Q_USER_SIG);                       // valid signal
+..\..\qf\source\qte_ctor.cpp  45  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+_
+}
+..\..\qf\source\qte_ctor.cpp  48  Note 952: Parameter 's' (line 38) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qte_ctor.cpp  38  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qte_darm.cpp (C++)
+                               _
+uint8_t QTimeEvt::disarm(void) {
+..\..\qf\source\qte_darm.cpp  36  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                               _
+#...       /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -rest
+        QS_BEGIN_NOLOCK_(QS_QF_TIMEEVT_DISARM, QS::teObj_, this)
+..\..\qf\source\qte_darm.cpp  53  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                     _
+            QS_TIME_();                                           // timestamp
+..\..\qf\source\qte_darm.cpp  54  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                        _
+#... e  -e923 */((void)0) /*lint -restore */
+            QS_OBJ_(this);                           // this time event object
+..\..\qf\source\qte_darm.cpp  55  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                         _
+#... ve  -e923 */((void)0) /*lint -restore */
+            QS_OBJ_(m_act);                               // the active object
+..\..\qf\source\qte_darm.cpp  56  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                         _
+            QS_TEC_(m_ctr);                             // the number of ticks
+..\..\qf\source\qte_darm.cpp  57  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                              _
+            QS_TEC_(m_interval);                               // the interval
+..\..\qf\source\qte_darm.cpp  58  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                                                                       _
+#...               /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*li
+        QS_BEGIN_NOLOCK_(QS_QF_TIMEEVT_DISARM_ATTEMPT, QS::teObj_, this)
+..\..\qf\source\qte_darm.cpp  64  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                     _
+            QS_TIME_();                                           // timestamp
+..\..\qf\source\qte_darm.cpp  65  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                        _
+#... e  -e923 */((void)0) /*lint -restore */
+            QS_OBJ_(this);                           // this time event object
+..\..\qf\source\qte_darm.cpp  66  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                         _
+#... ve  -e923 */((void)0) /*lint -restore */
+            QS_OBJ_(m_act);                               // the active object
+..\..\qf\source\qte_darm.cpp  67  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+
+--- Module:   ..\..\qf\source\qte_rarm.cpp (C++)
+                             _
+#... this_file[] = "qte_rarm"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qte_rarm)
+..\..\qf\source\qte_rarm.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                            _
+uint8_t QTimeEvt::rearm(QTimeEvtCtr nTicks) {
+..\..\qf\source\qte_rarm.cpp  38  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                        _
+#... r)0) && (sig >= (QSignal)Q_USER_SIG) && (m_act != (QActive *)0)) { } else 
+#... SER_SIG) && (m_act != (QActive *)0))
+              && (m_act != (QActive *)0));              // valid active object
+..\..\qf\source\qte_rarm.cpp  41  Note 930: cast from enum to unsigned char
+                                        _
+#...  (m_act != (QActive *)0)) { } else (Q_onAssert(l_this_file, __LINE__)) /*l
+#... SER_SIG) && (m_act != (QActive *)0))
+              && (m_act != (QActive *)0));              // valid active object
+..\..\qf\source\qte_rarm.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                        _
+#... e (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... SER_SIG) && (m_act != (QActive *)0))
+              && (m_act != (QActive *)0));              // valid active object
+..\..\qf\source\qte_rarm.cpp  41  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+                                                          _
+#...  /*lint  -save  -e506 -e774 -e572 -e778 -e912 */if (0) { /*lint -restore *
+    QS_BEGIN_NOLOCK_(QS_QF_TIMEEVT_REARM, QS::teObj_, this)
+..\..\qf\source\qte_rarm.cpp  59  Note 909: Implicit conversion from int to
+    bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+                 _
+        QS_TIME_();                                               // timestamp
+..\..\qf\source\qte_rarm.cpp  60  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                    _
+#... e923 */((void)0) /*lint -restore */
+        QS_OBJ_(this);                               // this time event object
+..\..\qf\source\qte_rarm.cpp  61  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                     _
+#... -e923 */((void)0) /*lint -restore */
+        QS_OBJ_(m_act);                                   // the active object
+..\..\qf\source\qte_rarm.cpp  62  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                     _
+        QS_TEC_(m_ctr);                                 // the number of ticks
+..\..\qf\source\qte_rarm.cpp  63  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                          _
+        QS_TEC_(m_interval);                                   // the interval
+..\..\qf\source\qte_rarm.cpp  64  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+                      _
+        QS_U8_(isArmed);                               // was the timer armed?
+..\..\qf\source\qte_rarm.cpp  65  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+_
+}
+..\..\qf\source\qte_rarm.cpp  70  Note 952: Parameter 'nTicks' (line 38) could
+    be declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qte_rarm.cpp  38  Info 830: Location cited in prior message
+
+--- Module:   ..\..\qf\source\qvanilla.cpp (C++)
+                             _
+#... this_file[] = "qvanilla"; /*lint -restore */
+Q_DEFINE_THIS_MODULE(qvanilla)
+..\..\qf\source\qvanilla.cpp  31  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                 _
+    QPSet64 volatile QF_readySet_;           // QF-ready set of active objects
+..\..\qf\source\qvanilla.cpp  42  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                                      _
+char const Q_ROM * Q_ROM_VAR QF::getPortVersion(void) {
+..\..\qf\source\qvanilla.cpp  46  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                 _
+    static const char Q_ROM version[] = "4.0.00";
+..\..\qf\source\qvanilla.cpp  47  Note 963: Qualifier const or volatile
+    precedes a type; use +fqb to reverse the test
+                    _
+void QF::init(void) {
+..\..\qf\source\qvanilla.cpp  51  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                    _
+void QF::stop(void) {
+..\..\qf\source\qvanilla.cpp  55  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                   _
+void QF::run(void) {
+..\..\qf\source\qvanilla.cpp  60  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                   _
+        if (QF_readySet_.notEmpty()) {
+..\..\qf\source\qvanilla.cpp  66  Note 909: Implicit conversion from unsigned
+    char to bool [MISRA C++ Rules 5-0-13, 5-0-14, 5-3-2]
+_
+{
+..\..\qf\source\qvanilla.cpp  89  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+                                      _
+#...  (stkSto == (void *)0)) { } else (Q_onAssert(l_this_file, __LINE__)) /*lin
+#... t8_t)63) && (stkSto == (void *)0))
+              && (stkSto == (void *)0));      // does not need per-actor stack
+..\..\qf\source\qvanilla.cpp  91  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 6-4-1, left brace expected for if and else
+                                      _
+#... (Q_onAssert(l_this_file, __LINE__)) /*lint -restore */
+#... t8_t)63) && (stkSto == (void *)0))
+              && (stkSto == (void *)0));      // does not need per-actor stack
+..\..\qf\source\qvanilla.cpp  91  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 5-2-12, Array type passed to function expecting a pointer
+             _
+    QS_FLUSH();                          // flush the trace buffer to the host
+..\..\qf\source\qvanilla.cpp  98  Note 920: cast from int to void [MISRA C++
+    Rule 5-2-7]
+_
+}
+..\..\qf\source\qvanilla.cpp  99  Note 952: Parameter 'stkSto' (line 87) could
+    be declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qvanilla.cpp  87  Info 830: Location cited in prior message
+_
+}
+..\..\qf\source\qvanilla.cpp  99  Info 818: Pointer parameter 'stkSto' (line
+    87) could be declared as pointing to const [MISRA C++ Rule 7-1-2]
+..\..\qf\source\qvanilla.cpp  87  Info 830: Location cited in prior message
+_
+}
+..\..\qf\source\qvanilla.cpp  99  Note 952: Parameter 'prio' (line 85) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qvanilla.cpp  85  Info 830: Location cited in prior message
+_
+}
+..\..\qf\source\qvanilla.cpp  99  Note 952: Parameter 'ie' (line 88) could be
+    declared const [MISRA C++ Rule 7-1-1]
+..\..\qf\source\qvanilla.cpp  88  Info 830: Location cited in prior message
+                         _
+void QActive::stop(void) {
+..\..\qf\source\qvanilla.cpp  101  Note 1960: Violates MISRA C++ 2008 Required
+    Rule 7-3-1, Global declaration
+_
+}
+..\..\qf\source\qvanilla.cpp  103  Info 1762: Member function
+    'QActive::stop(void)' could be made const [MISRA C++ Rule 9-3-3]
+
+--- Additional Misra Messages:
+
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QF::init(void)
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QPSet8::insert(unsigned char)
+    volatile
+Note 1960: Violates MISRA C++ 2008 Required Rule 0-1-8, Void return type for
+    function without external side-effects: QPSet8::remove(unsigned char)
+    volatile
+
+--- Global Wrap-up
+
+Info 765: external 'QF_readySet_' (line 42, file ..\..\qf\source\qvanilla.cpp)
+    could be made static [MISRA C++ Rule 3-3-1]
+..\..\qf\source\qvanilla.cpp  42  Info 830: Location cited in prior message
+Info 765: external 'QF_intLockNest_' (line 40, file ..\..\qf\source\qf_act.cpp)
+    could be made static [MISRA C++ Rule 3-3-1]
+..\..\qf\source\qf_act.cpp  40  Info 830: Location cited in prior message
+Info 714: Symbol 'QF_intLockNest_' (line 40, file ..\..\qf\source\qf_act.cpp)
+    not referenced [MISRA C++ Rule 0-1-3, 0-1-10]
+..\..\qf\source\qf_act.cpp  40  Info 830: Location cited in prior message
+Note 974: Worst case function for stack usage: 'QF::run' is finite, requires 89
+    bytes total stack in calling 'QF::gc'. See +stack for a full report. [MISRA
+    C++ Rule 7-5-4]
