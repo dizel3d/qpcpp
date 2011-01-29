@@ -50,7 +50,7 @@ QP_DEP  = $(QP_INCDIR)/qassert.h
 # gcc options
 # -c    : compile only
 # -g    : source level debugging
-CCFLAGS  = -g -c -Wall -o$@
+CCFLAGS  = -m32 -g -c -Wall -o$@
 
 # release ....................................................................
 ifeq ($(MAKECMDGOALS), rel)
@@ -60,7 +60,7 @@ BINDIR   = rel
 # gcc options
 # -c    : compile only
 # -O    : optimize
-CCFLAGS  = -O -c -Wall -o$@
+CCFLAGS  = -m32 -O -c -Wall -o$@
 
 endif
 
@@ -79,7 +79,7 @@ BINDIR   = spy
 # -c    : compile only
 # -g    : source level debugging
 # -D    : define preprocessor macro
-CCFLAGS  = -g -c -Wall -DQ_SPY -o$@
+CCFLAGS  = -m32 -g -c -Wall -DQ_SPY -o$@
 
 endif
 

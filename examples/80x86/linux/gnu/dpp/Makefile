@@ -36,7 +36,7 @@ QP_INCDIR = ../../../../../include
 QP_PRTDIR = ../../../../../ports/80x86/linux/gnu
 QP_LIBDIR = $(QP_PRTDIR)/$(BINDIR)
 BLDDIR    = .
-LINKFLAGS =
+LINKFLAGS = -m32
 
 CCINC    := -I$(QP_INCDIR) -I$(QP_PRTDIR) -I$(BLDDIR)
 QP_DEP   := $(QP_INCDIR)/qassert.h \
@@ -55,7 +55,7 @@ BINDIR   = dbg
 # g++ options
 # -c    : compile only
 # -g    : source level debugging
-CCFLAGS  = -g -c -Wall -o$@
+CCFLAGS  = -m32 -g -c -Wall -o$@
 
 # release ....................................................................
 ifeq ($(MAKECMDGOALS), rel)
@@ -65,7 +65,7 @@ BINDIR   = rel
 # g++ options
 # -c    : compile only
 # -O    : optimize
-CCFLAGS  = -O -c -Wall -o$@
+CCFLAGS  = -m32 -O -c -Wall -o$@
 
 endif
 ifeq ($(MAKECMDGOALS), rel_clean)
@@ -83,7 +83,7 @@ BINDIR   = spy
 # -c    : compile only
 # -g    : source level debugging
 # -D    : define preprocessor macro
-CCFLAGS  = -g -c -Wall -DQ_SPY -o$@
+CCFLAGS  = -m32 -g -c -Wall -DQ_SPY -o$@
 
 QS_LIB  := $(QP_LIBDIR)/libqs.a
 
